@@ -1,0 +1,25 @@
+name: test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Run Flyway Migrations
+      run: mvn flyway:migrate
+
+    - name: Run Tests
+      run: mvn test
