@@ -1,5 +1,7 @@
 name: Test Java 17 Compatibility
 
+name: Test Java 17 Compatibility
+
 on:
   pull_request:
     branches:
@@ -18,5 +20,5 @@ jobs:
       with:
         java-version: '17'
 
-    - name: Build with Maven
-      run: mvn clean install
+    - name: Build with Gradle
+      run: ./gradlew clean build
