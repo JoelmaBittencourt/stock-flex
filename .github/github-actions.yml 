@@ -3,7 +3,7 @@ name: Test Java 17 Compatibility
 on:
   pull_request:
     branches:
-      - masater
+      - master
 
 jobs:
   build:
