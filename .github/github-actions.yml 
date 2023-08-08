@@ -1,0 +1,24 @@
+name: Test Java 17 Compatibility
+
+name: Test Java 17 Compatibility
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
