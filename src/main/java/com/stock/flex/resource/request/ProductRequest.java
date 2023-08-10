@@ -1,4 +1,10 @@
 package com.stock.flex.resource.request;
 
-public class ProductRequest {
+public record ProductRequest(String name,
+                             String description,
+                             double price,
+                             int quantity,
+                             int displayOrder,
+                             int starQuantity) {
+
 }
