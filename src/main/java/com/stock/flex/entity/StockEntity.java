@@ -24,7 +24,6 @@ public class StockEntity {
     private UUID id;
     private String name;
     private String description;
-    private boolean ativo;
     private List<String> category;
 
     public StockEntity(StockRequest request) {
