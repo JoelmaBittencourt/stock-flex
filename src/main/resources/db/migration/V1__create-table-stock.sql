@@ -1,4 +1,3 @@
--- V1__Create_tables.sql
 CREATE TABLE stock (
     id BINARY(16) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
