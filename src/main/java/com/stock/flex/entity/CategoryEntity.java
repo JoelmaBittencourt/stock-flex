@@ -2,6 +2,7 @@ package com.stock.flex.entity;
 
 
 import com.stock.flex.resource.request.CategoryRequest;
+import com.stock.flex.resource.response.CategoryResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,15 @@ public class CategoryEntity {
         this.products = request.products();
     }
 
-
+    public void updateInfo(CategoryResponse response) {
+        if (response.name() != null) {
+            this.name = response.name();
+        }
+        if (response.description() != null) {
+            this.description = response.description();
+        }
+        if (response.products() != null) {
+            this.products = response.products();
+        }
+    }
 }
