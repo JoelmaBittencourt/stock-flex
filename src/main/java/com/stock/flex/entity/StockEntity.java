@@ -1,6 +1,7 @@
 package com.stock.flex.entity;
 
 import com.stock.flex.resource.request.StockRequest;
+import com.stock.flex.resource.response.StockResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,14 @@ public class StockEntity {
         this.category = new ArrayList<String>();
     }
 
+    public void updateInfo(StockResponse response) {
+        if (response.name() != null) {
+            this.name = response.name();
+        }
+        if (response.description() != null) {
+            this.description = response.description();
+        }
+        if (response.category() != null) {
+        this.category = response.category();}
+    }
 }
