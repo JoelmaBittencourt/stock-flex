@@ -42,19 +42,12 @@ public class CategoryResource {
         return ResponseEntity.ok(new CategoryResponse(category));
     }
 
-    @PutMapping
-    @Transactional
-    public ResponseEntity<CategoryResponse> responseEntity(@RequestBody CategoryResponse response) {
-        var product = repository.getReferenceById(response.id());
-        product.updateInfo(response);
-        return ResponseEntity.ok(new CategoryResponse(product));
-    }
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<CategoryResponse> updateCategory(@PathVariable UUID id, @RequestBody CategoryResponse response) {
+    public ResponseEntity<CategoryRequest> updateCategory(@PathVariable UUID id, @RequestBody CategoryRequest request) {
         var category = repository.getReferenceById(id);
-        category.updateInfo(response);
-        return ResponseEntity.ok(new CategoryResponse(category));
+        category.updateInfo(request);
+        return ResponseEntity.ok(new CategoryRequest(category));
     }
 
     @DeleteMapping("/{id}")
