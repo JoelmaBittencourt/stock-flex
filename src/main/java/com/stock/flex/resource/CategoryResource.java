@@ -22,12 +22,12 @@ public class CategoryResource {
     CategoryRepository repository;
 
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody CategoryRequest request, UriComponentsBuilder uriBuilder) {
-        var cqategoryEntity = new CategoryEntity(request);
-        repository.save(cqategoryEntity);
-        var uri = uriBuilder.path("/category/{id}").buildAndExpand(cqategoryEntity.getId()).toUri();
+    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CategoryRequest request, UriComponentsBuilder uriBuilder) {
+        var category = new CategoryEntity(request);
+        repository.save(category);
+        var uri = uriBuilder.path("/category/{id}").buildAndExpand(category.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new CategoryResponse(cqategoryEntity));
+        return ResponseEntity.created(uri).body(new CategoryResponse(category));
     }
 
     @GetMapping
