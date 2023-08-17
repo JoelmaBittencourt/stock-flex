@@ -1,6 +1,5 @@
 package com.stock.flex.resource.request;
 
-import com.stock.flex.entity.CategoryEntity;
 import com.stock.flex.entity.ProductEntity;
 
 public record ProductRequest(String name,

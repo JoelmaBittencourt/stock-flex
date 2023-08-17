@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  oracle-server-db:
+    container_name: oracle19c
+    image: gvenzl/oracle-xe
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: "SuperPassword@22"
+      ORACLE_SERVICE_NAME: "stockflex"
