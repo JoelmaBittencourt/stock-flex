@@ -1,6 +1,7 @@
 package com.stock.flex.entity;
 
 import com.stock.flex.resource.request.ProductRequest;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,12 @@ public class ProductEntity {
     private int quantity;
     private int displayOrder;
     private int starQuantity;
+
+
+    @ManyToOne // Estabelece o relacionamento muitos-para-um com a categoria
+    @JoinColumn(name = "category_id") // Especifique a coluna de junção
+    private CategoryEntity category; // Adicione esse atributo
+
 
     public ProductEntity(ProductRequest request) {
         this.name = request.name();

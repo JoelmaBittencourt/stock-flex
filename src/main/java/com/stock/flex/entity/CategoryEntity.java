@@ -3,18 +3,16 @@ package com.stock.flex.entity;
 
 import com.stock.flex.resource.request.CategoryRequest;
 
+import com.stock.flex.resource.request.ProductRequest;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -29,23 +27,35 @@ public class CategoryEntity {
     private UUID id;
     private String name;
     private String description;
-    private List<String> products;
+
+    @ManyToOne // Mapeamento muitos-para-um com StockEntity
+    @JoinColumn(name = "stock_id") // Nome da coluna de junção
+    private StockEntity stock;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category") // Mapeamento um-para-muitos com ProductEntity
+    private List<ProductEntity> products;
 
     public CategoryEntity(CategoryRequest request) {
         this.name = request.name();
         this.description = request.description();
-        this.products = request.products();
+        this.products =  mapProductRequestsToEntities(request.products());
     }
 
-    public void updateInfo(CategoryRequest response) {
-        if (response.name() != null) {
-            this.name = response.name();
+    public void updateInfo(CategoryRequest request) {
+        if (request.name() != null) {
+            this.name = request.name();
         }
-        if (response.description() != null) {
-            this.description = response.description();
+        if (request.description() != null) {
+            this.description = request.description();
         }
-        if (response.products() != null) {
-            this.products = response.products();
-        }
+        this.products = mapProductRequestsToEntities(request.products());
     }
-}
+
+    private List<ProductEntity> mapProductRequestsToEntities(List<ProductRequest> productRequests) {
+        return productRequests.stream()
+                .map(ProductEntity::new) // Criar ProductEntity a partir do ProductRequest
+                .collect(Collectors.toList());
+    }
+
+    }
+
