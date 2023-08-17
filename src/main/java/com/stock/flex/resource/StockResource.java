@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +37,7 @@ public class StockResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<StockResponse>> get() {// se fosse todos os dados
+    public ResponseEntity<List<StockResponse>> get() {
         var stock = repository.findAll().stream().map(StockResponse::new).toList();
         return ResponseEntity.ok(stock);
     }
@@ -45,7 +45,7 @@ public class StockResource {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<StockResponse> update(@PathVariable UUID id, @RequestBody StockRequest request) {
-        var stock = repository.getById(id);
+        var stock = repository.getReferenceById(id);
         stock.updateInfo(request);
         return ResponseEntity.ok(new StockResponse(stock));
     }

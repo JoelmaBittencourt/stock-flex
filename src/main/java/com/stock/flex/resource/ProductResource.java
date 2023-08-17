@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +45,7 @@ public class ProductResource {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ProductRequest> update(@PathVariable UUID id, @RequestBody ProductRequest request) {
-        var product = repository.getById(id);
+        var product = repository.getReferenceById(id);
         product.updateInfo(request);
         return ResponseEntity.ok(new ProductRequest(product));
     }
