@@ -33,7 +33,7 @@ public class CategoryEntity {
         this.products = request.products();
     }
 
-    public void updateInfo(CategoryResponse response) {
+    public void updateInfo(CategoryRequest response) {
         if (response.name() != null) {
             this.name = response.name();
         }

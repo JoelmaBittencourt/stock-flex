@@ -30,10 +30,10 @@ public class StockEntity {
     public StockEntity(StockRequest request) {
         this.name = request.name();
         this.description = request.description();
-        this.category = new ArrayList<String>();
+        this.category = request.category();
     }
 
-    public void updateInfo(StockResponse response) {
+    public void updateInfo(StockRequest response) {
         if (response.name() != null) {
             this.name = response.name();
         }

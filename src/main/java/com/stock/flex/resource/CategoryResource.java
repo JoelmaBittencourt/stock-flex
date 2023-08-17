@@ -7,7 +7,9 @@ import com.stock.flex.resource.response.CategoryResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,23 +22,38 @@ public class CategoryResource {
     CategoryRepository repository;
 
     @PostMapping
-    public void create(@Valid @RequestBody CategoryRequest request){
-        repository.save(new CategoryEntity(request));
+    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CategoryRequest request, UriComponentsBuilder uriBuilder) {
+        var category = new CategoryEntity(request);
+        repository.save(category);
+        var uri = uriBuilder.path("/category/{id}").buildAndExpand(category.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new CategoryResponse(category));
     }
 
     @GetMapping
-    public List<CategoryResponse> get() {
-        return repository.findAll().stream().map(CategoryResponse::new).toList();
+    public ResponseEntity<List<CategoryResponse>> get() {
+        var list = repository.findAll().stream().map(CategoryResponse::new).toList();
+        return ResponseEntity.ok(list);
     }
-    @PutMapping
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable UUID id) {
+        var category = repository.getReferenceById(id);
+        return ResponseEntity.ok(new CategoryResponse(category));
+    }
+
+    @PutMapping("/{id}")
     @Transactional
-    public void update(@RequestBody CategoryResponse response) {
-        var product = repository.getReferenceById(response.id());
-        product.updateInfo(response);
+    public ResponseEntity<CategoryRequest> updateCategory(@PathVariable UUID id, @RequestBody CategoryRequest request) {
+        var category = repository.getReferenceById(id);
+        category.updateInfo(request);
+        return ResponseEntity.ok(new CategoryRequest(category));
     }
+
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable UUID id) {
+    public ResponseEntity delete(@PathVariable UUID id) {
         repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

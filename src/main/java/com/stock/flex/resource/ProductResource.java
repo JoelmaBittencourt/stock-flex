@@ -6,6 +6,8 @@ import com.stock.flex.resource.request.ProductRequest;
 import com.stock.flex.resource.response.ProductResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,26 +22,31 @@ public class ProductResource {
 
     @PostMapping
     @Transactional
-    public void create(@RequestBody ProductRequest request) {
-        System.out.println(request);
-        repository.save(new ProductEntity(request));
+    public ResponseEntity<ProductResponse> create(@RequestBody ProductRequest request) {
+        ProductEntity savedProduct = repository.save(new ProductEntity(request));
+        ProductResponse response = new ProductResponse(savedProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public List<ProductResponse> get() {// se fosse todos os dados
-        return repository.findAll().stream().map(ProductResponse::new).toList();
+    public ResponseEntity<List<ProductResponse>> get() {// se fosse todos os dados
+        var product = repository.findAll().stream().map(ProductResponse::new).toList();
+        return ResponseEntity.ok(product);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public void update(@RequestBody ProductResponse response) {
-        var product = repository.getReferenceById(response.id());
-        product.updateInfo(response);
+    public ResponseEntity<ProductRequest> update(@PathVariable UUID id, @RequestBody ProductRequest request) {
+        var product = repository.getReferenceById(id);
+        product.updateInfo(request);
+        return ResponseEntity.ok(new ProductRequest(product));
     }
+
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable UUID id) {
+    public ResponseEntity delete(@PathVariable UUID id) {
         repository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

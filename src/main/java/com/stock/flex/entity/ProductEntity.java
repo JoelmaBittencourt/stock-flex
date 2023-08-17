@@ -38,15 +38,12 @@ public class ProductEntity {
 
     }
 
-    public void updateInfo(ProductResponse response) {
-        if (response.id() != null) {
-            this.id = response.id();
+    public void updateInfo(ProductRequest request) {
+        if (request.name() != null) {
+            this.name = request.name();
         }
-        if (response.name() != null) {
-            this.name = response.name();
-        }
-        if (response.description() != null) {
-            this.description = response.description();
+        if (request.description() != null) {
+            this.description = request.description();
         }
     }
 }
