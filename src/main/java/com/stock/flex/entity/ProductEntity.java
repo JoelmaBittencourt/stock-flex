@@ -1,13 +1,16 @@
 package com.stock.flex.entity;
 
 import com.stock.flex.resource.request.ProductRequest;
-import com.stock.flex.resource.response.ProductResponse;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
 import java.util.UUID;
 
 @Entity
