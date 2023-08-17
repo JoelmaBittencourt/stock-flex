@@ -15,4 +15,4 @@ server:
   port: 8088
   output:
     ansi:
-      enabled: always
+      enabled: ALWAYS
