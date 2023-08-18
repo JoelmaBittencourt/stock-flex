@@ -16,7 +16,7 @@ public record CategoryRequest(String name,
 
     private static List<ProductRequest> mapProductsToRequests(List<ProductEntity> products) {
         return products.stream()
-                .map(ProductRequest::new) // Criar ProductRequest a partir de ProductEntity
+                .map(ProductRequest::new)
                 .collect(Collectors.toList());
     }
 }

@@ -32,10 +32,9 @@ public class ProductEntity {
     private int displayOrder;
     private int starQuantity;
 
-
-    @ManyToOne // Estabelece o relacionamento muitos-para-um com a categoria
-    @JoinColumn(name = "category_id") // Especifique a coluna de junção
-    private CategoryEntity category; // Adicione esse atributo
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
 
     public ProductEntity(ProductRequest request) {
@@ -45,7 +44,6 @@ public class ProductEntity {
         this.quantity = request.quantity();
         this.displayOrder = request.displayOrder();
         this.starQuantity = request.starQuantity();
-
     }
 
     public void updateInfo(ProductRequest request) {

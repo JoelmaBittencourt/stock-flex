@@ -45,7 +45,7 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable UUID id) {
+    public ResponseEntity getById(@PathVariable UUID id) {
         var category = repository.getById(id);
         return ResponseEntity.ok(new CategoryResponse(category));
     }

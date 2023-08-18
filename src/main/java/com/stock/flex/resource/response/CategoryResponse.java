@@ -18,7 +18,7 @@ public record CategoryResponse(UUID id,
 
     private static List<ProductResponse> mapProductsToResponses(List<ProductEntity> products) {
         return products.stream()
-                .map(ProductResponse::new) // Criar ProductResponse a partir de ProductEntity
+                .map(ProductResponse::new)
                 .collect(Collectors.toList());
     }
 }

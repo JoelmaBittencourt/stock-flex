@@ -55,7 +55,7 @@ public class StockEntity {
 
     private List<CategoryEntity> mapCategoryRequestsToEntities(List<CategoryRequest> categoryRequests) {
         return categoryRequests.stream()
-                .map(CategoryEntity::new) // Criar CategoryEntity a partir do CategoryRequest
+                .map(CategoryEntity::new)
                 .collect(Collectors.toList());
     }
 

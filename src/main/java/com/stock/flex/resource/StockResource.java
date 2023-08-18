@@ -4,20 +4,12 @@ import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.StockRequest;
 import com.stock.flex.resource.response.StockResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +34,12 @@ public class StockResource {
         return ResponseEntity.ok(stock);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable UUID id) {
+        var stock = repository.getById(id);
+        return ResponseEntity.ok(new StockResponse(stock));
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<StockResponse> update(@PathVariable UUID id, @RequestBody StockRequest request) {
@@ -49,7 +47,6 @@ public class StockResource {
         stock.updateInfo(request);
         return ResponseEntity.ok(new StockResponse(stock));
     }
-
 
     @DeleteMapping("/{id}")
     @Transactional
