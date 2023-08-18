@@ -18,7 +18,7 @@ public record StockResponse(UUID id,
 
     private static List<CategoryResponse> mapCategoriesToResponses(List<CategoryEntity> categories) {
         return categories.stream()
-                .map(CategoryResponse::new) // Criar CategoryResponse a partir de CategoryEntity
+                .map(CategoryResponse::new)
                 .collect(Collectors.toList());
     }
 }
