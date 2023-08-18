@@ -4,7 +4,7 @@ import java.util.List;
 
 public record StockRequest(String name,
                            String description,
-                           List<String> category) {
+                           List<CategoryRequest> category) {
 }
 
 

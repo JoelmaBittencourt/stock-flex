@@ -1,6 +1,7 @@
 package com.stock.flex.entity;
 
 import com.stock.flex.resource.request.ProductRequest;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,11 @@ public class ProductEntity {
     private int displayOrder;
     private int starQuantity;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
+
+
     public ProductEntity(ProductRequest request) {
         this.name = request.name();
         this.description = request.description();
@@ -38,7 +44,6 @@ public class ProductEntity {
         this.quantity = request.quantity();
         this.displayOrder = request.displayOrder();
         this.starQuantity = request.starQuantity();
-
     }
 
     public void updateInfo(ProductRequest request) {
