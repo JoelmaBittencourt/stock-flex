@@ -1,8 +1,9 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security.controllers;
 
-import com.stock.flex.security.resource.request.response.AuthResponse;
-import com.stock.flex.security.resource.request.AuthRequest;
-import com.stock.flex.security.resource.request.RegisterRequest;
+import com.stock.flex.security.dtos.AuthRequestDTO;
+import com.stock.flex.security.dtos.AuthResponseDTO;
+import com.stock.flex.security.dtos.RegisterRequestDTO;
+import com.stock.flex.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthResource {
+public class AuthController {
 	
 	@Autowired
 	private AuthService authService;
 
 	@PostMapping("/register")
-	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-		return ResponseEntity.ok(authService.register(request));
+	public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO dto) {
+		return ResponseEntity.ok(authService.register(dto));
 	}
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest dto) {
+	public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO dto) {
 		return ResponseEntity.ok(authService.authenticate(dto));
 	}
 }

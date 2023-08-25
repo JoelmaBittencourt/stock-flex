@@ -1,4 +1,4 @@
-package com.stock.flex.security.user;
+package com.stock.flex.security.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserSpringSecurityService userSpringSecurityService;
+	private PersonService personService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			return userSpringSecurityService.findByEmail(username);
+			return personService.findByEmail(username);
 		}
 		catch (Exception e) {
 			throw new UsernameNotFoundException(e.getMessage());

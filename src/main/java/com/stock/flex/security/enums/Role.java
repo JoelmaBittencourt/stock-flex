@@ -1,9 +1,9 @@
-package com.stock.flex.security.user;
+package com.stock.flex.security.enums;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public enum RoleEnum {
+public enum Role {
 	
 	USER(1, "User"),
 	ADMIN(2, "Administrator");
@@ -11,7 +11,7 @@ public enum RoleEnum {
 	private Integer id;
 	private String description;
 
-	RoleEnum(Integer id, String description) {
+	Role(Integer id, String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -32,15 +32,15 @@ public enum RoleEnum {
 		this.description = description;
 	}
 	
-	public static RoleEnum fromId(Integer id) {
-		return Arrays.stream(RoleEnum.values())
+	public static Role fromId(Integer id) {
+		return Arrays.stream(Role.values())
 				.filter(role -> Objects.equals(role.getId(), id))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("Unknown role: " + id));
 	}
 	
-	public static RoleEnum fromDescription(String description) {
-		return Arrays.stream(RoleEnum.values())
+	public static Role fromDescription(String description) {
+		return Arrays.stream(Role.values())
 				.filter(role -> Objects.equals(role.getDescription(), description))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("Unknown role: " + description));	
