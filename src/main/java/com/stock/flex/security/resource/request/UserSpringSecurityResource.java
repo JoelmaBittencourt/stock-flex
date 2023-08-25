@@ -1,7 +1,7 @@
 package com.stock.flex.security.resource.request;
 
 import com.stock.flex.security.resource.request.response.PersonResponse;
-import com.stock.flex.security.user.PersonService;
+import com.stock.flex.security.user.UserSpringSecurityService;
 import com.stock.flex.security.user.UserSpringSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 public class UserSpringSecurityResource {
 	
 	@Autowired
-	private PersonService service;
+	private UserSpringSecurityService service;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

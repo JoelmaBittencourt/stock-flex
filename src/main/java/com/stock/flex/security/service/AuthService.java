@@ -1,6 +1,6 @@
 package com.stock.flex.security.service;
 
-import com.stock.flex.security.user.PersonService;
+import com.stock.flex.security.user.UserSpringSecurityService;
 import com.stock.flex.security.user.UserSpringSecurity;
 import com.stock.flex.security.resource.request.response.AuthResponse;
 import com.stock.flex.security.resource.request.AuthRequest;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 	@Autowired
-	private PersonService personService;
+	private UserSpringSecurityService userSpringSecurityService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -33,7 +33,7 @@ public class AuthService {
 		userSpringSecurity.setEmail(request.getEmail());
 		userSpringSecurity.setPassword(passwordEncoder.encode(request.getPassword()));
 		
-		userSpringSecurity = personService.create(userSpringSecurity);
+		userSpringSecurity = userSpringSecurityService.create(userSpringSecurity);
 		
 		return new AuthResponse(jwtService.generateToken(userSpringSecurity.getEmail()));
 	}
@@ -45,7 +45,7 @@ public class AuthService {
 						request.getEmail(),
 						request.getPassword()));
 		
-		final UserSpringSecurity userSpringSecurity = personService.findByEmail(request.getEmail());
+		final UserSpringSecurity userSpringSecurity = userSpringSecurityService.findByEmail(request.getEmail());
 		return new AuthResponse(jwtService.generateToken(userSpringSecurity.getEmail()));
 	}
 }

@@ -1,6 +1,6 @@
 package com.stock.flex.security;
 
-import com.stock.flex.security.user.PersonService;
+import com.stock.flex.security.user.UserSpringSecurityService;
 import com.stock.flex.security.user.RoleEnum;
 import com.stock.flex.security.user.UserSpringSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class DatabaseService {
 
 	@Autowired
-	private PersonService personService;
+	private UserSpringSecurityService userSpringSecurityService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -26,9 +26,9 @@ public class DatabaseService {
 
 		admin.addRole(RoleEnum.ADMIN);
 
-		System.out.println(personService.create(user1));
-		System.out.println(personService.create(user2));
-		System.out.println(personService.create(admin));
+		System.out.println(userSpringSecurityService.create(user1));
+		System.out.println(userSpringSecurityService.create(user2));
+		System.out.println(userSpringSecurityService.create(admin));
 
 		System.out.println("Database initialized!");
 	}
