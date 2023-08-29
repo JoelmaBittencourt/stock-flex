@@ -45,10 +45,4 @@ public class UserEntity {
             this.password = request.password();
         }
     }
-
-    private List<StockEntity> mapStockRequestsToEntities(List<StockRequest> categoryRequests) {
-        return categoryRequests.stream()
-                .map(StockEntity::new)
-                .collect(Collectors.toList());
-    }
 }

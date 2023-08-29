@@ -24,21 +24,21 @@ public class UserResource {
     @PostMapping
     @Transactional
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest request) {
-        UserEntity savedProduct = repository.save(new UserEntity(request));
-        UserResponse response = new UserResponse(savedProduct);
+        UserEntity saveduser = repository.save(new UserEntity(request));
+        UserResponse response = new UserResponse(saveduser);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> get() {
-        var product = repository.findAll().stream().map(UserResponse::new).toList();
-        return ResponseEntity.ok(product);
+        var user = repository.findAll().stream().map(UserResponse::new).toList();
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable UUID id) {
-        var product = repository.getById(id);
-        return ResponseEntity.ok(new UserResponse(product));
+        var user = repository.getById(id);
+        return ResponseEntity.ok(new UserResponse(user));
     }
 
     @PutMapping("/{id}")
