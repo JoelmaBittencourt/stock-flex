@@ -35,6 +35,11 @@ public class StockEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<CategoryEntity> category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+
     public StockEntity(StockRequest request) {
         this.name = request.name();
         this.description = request.description();
