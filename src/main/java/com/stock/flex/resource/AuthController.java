@@ -1,8 +1,8 @@
-package com.stock.flex.security.controllers;
+package com.stock.flex.resource;
 
-import com.stock.flex.security.dtos.AuthRequestDTO;
-import com.stock.flex.security.dtos.AuthResponseDTO;
-import com.stock.flex.security.dtos.RegisterRequestDTO;
+import com.stock.flex.resource.request.AuthRequestDTO;
+import com.stock.flex.resource.request.AuthResponseDTO;
+import com.stock.flex.resource.request.RegisterRequestDTO;
 import com.stock.flex.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

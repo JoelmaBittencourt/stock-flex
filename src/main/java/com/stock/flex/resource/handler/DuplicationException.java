@@ -1,4 +1,4 @@
-package com.stock.flex.security.exceptions;
+package com.stock.flex.resource.handler;
 
 public class DuplicationException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

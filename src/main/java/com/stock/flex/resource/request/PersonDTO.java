@@ -1,9 +1,9 @@
-package com.stock.flex.security.dtos;
+package com.stock.flex.resource.request;
 
 
 
-import com.stock.flex.security.entities.Person;
-import com.stock.flex.security.enums.Role;
+import com.stock.flex.entity.Person;
+import com.stock.flex.entity.enums.Role;
 
 import java.util.HashSet;
 import java.util.Set;

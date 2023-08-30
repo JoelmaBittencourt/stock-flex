@@ -1,9 +1,9 @@
-package com.stock.flex.security.controllers;
+package com.stock.flex.resource;
 
 import java.util.List;
 
-import com.stock.flex.security.dtos.PersonDTO;
-import com.stock.flex.security.entities.Person;
+import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.entity.Person;
 import com.stock.flex.security.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

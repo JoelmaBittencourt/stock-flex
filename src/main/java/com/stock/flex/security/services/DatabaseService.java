@@ -1,7 +1,7 @@
 package com.stock.flex.security.services;
 
-import com.stock.flex.security.entities.Person;
-import com.stock.flex.security.enums.Role;
+import com.stock.flex.entity.Person;
+import com.stock.flex.entity.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

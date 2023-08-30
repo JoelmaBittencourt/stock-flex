@@ -1,6 +1,6 @@
-package com.stock.flex.security.controllers;
+package com.stock.flex.resource;
 
-import com.stock.flex.security.dtos.StandardErrorDTO;
+import com.stock.flex.resource.request.StandardErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

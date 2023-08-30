@@ -1,4 +1,4 @@
-package com.stock.flex.security.dtos;
+package com.stock.flex.resource.request;
 
 public class RegisterRequestDTO {
 	

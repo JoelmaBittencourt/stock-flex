@@ -1,4 +1,4 @@
-package com.stock.flex.security.controllers;
+package com.stock.flex.resource;
 
 import com.stock.flex.security.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;

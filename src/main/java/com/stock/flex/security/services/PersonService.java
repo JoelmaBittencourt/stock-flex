@@ -3,12 +3,12 @@ package com.stock.flex.security.services;
 import java.util.List;
 import java.util.Objects;
 
-import com.stock.flex.security.dtos.PersonDTO;
-import com.stock.flex.security.entities.Person;
-import com.stock.flex.security.enums.Role;
-import com.stock.flex.security.exceptions.DuplicationException;
-import com.stock.flex.security.exceptions.NotFoundException;
-import com.stock.flex.security.repositories.PersonRepository;
+import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.entity.Person;
+import com.stock.flex.entity.enums.Role;
+import com.stock.flex.resource.handler.DuplicationException;
+import com.stock.flex.resource.handler.NotFoundException;
+import com.stock.flex.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

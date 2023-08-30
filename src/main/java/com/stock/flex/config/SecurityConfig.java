@@ -1,4 +1,4 @@
-package com.stock.flex.security.config;
+package com.stock.flex.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

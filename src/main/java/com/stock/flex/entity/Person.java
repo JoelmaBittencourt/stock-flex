@@ -1,8 +1,8 @@
-package com.stock.flex.security.entities;
+package com.stock.flex.entity;
 
 
-import com.stock.flex.security.dtos.PersonDTO;
-import com.stock.flex.security.enums.Role;
+import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,21 +23,21 @@ public class Person implements Serializable, UserDetails {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_person_id")
 	@SequenceGenerator(name = "gen_person_id", sequenceName = "seq_person_id", allocationSize = 1)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 50)
 	private String name;
-	
+
 	@Column(nullable = false, unique = true, length = 100)
 	private String email;
-	
+
 	@Column(nullable = false, length = 60)
 	private String password;
-	
+
 	@Column(name = "role")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "person_role")
 	private Set<Integer> roles = new HashSet<>(Arrays.asList(Role.USER.getId()));
-	
+
 	public Person() {
 		super();
 	}
@@ -57,13 +57,13 @@ public class Person implements Serializable, UserDetails {
 		this.email = email;
 		this.password = password;
 	}
-	
+
 	public Person(PersonDTO dto) {
 		this(dto.getName(), dto.getEmail(), dto.getPassword());
 		this.setId(dto.getId());
 		this.setStringRoles(dto.getRoles());
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -106,14 +106,14 @@ public class Person implements Serializable, UserDetails {
 		else
 			this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
 	}
-	
+
 	public void setStringRoles(Set<String> roles) {
 		if (roles == null || roles.isEmpty())
 			this.roles.clear();
 		else
 			this.roles = roles.stream().map(s -> Role.fromDescription(s).getId()).collect(Collectors.toSet());
 	}
-	
+
 	public void addRole(Role role) {
 		this.roles.add(role.getId());
 	}
@@ -154,5 +154,5 @@ public class Person implements Serializable, UserDetails {
 	public String toString() {
 		return "Person [id=" + id + ", name=" + name + ", email=" + email + ", roles=" + getRoles() + "]";
 	}
-	
+
 }

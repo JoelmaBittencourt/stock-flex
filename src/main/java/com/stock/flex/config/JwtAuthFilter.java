@@ -1,4 +1,4 @@
-package com.stock.flex.security.config;
+package com.stock.flex.config;
 
 import java.io.IOException;
 import java.util.Date;
