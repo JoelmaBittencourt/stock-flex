@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import static com.stock.flex.utils.Security.PRIVATE_MATCHERS;
 import static com.stock.flex.utils.Security.PUBLIC_MATCHERS;
 
 @Configuration
@@ -42,8 +43,9 @@ public class SecurityConfig {
 				.csrf().disable()
 				.authorizeHttpRequests()
 				.requestMatchers(PUBLIC_MATCHERS ).permitAll()//não precisa se authenticar
+				.requestMatchers(PRIVATE_MATCHERS).hasAuthority("ADMIN") 	//só admin pode deletar
 				.requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") 	//só admin pode deletar
-				//.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")		// If UserDetails.getAuthorities return [ROLE_ADMIN, ...] 
+				//.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")		// If UserDetails.getAuthorities return [ROLE_ADMIN, ...]
 				.anyRequest().authenticated()//qualquer outra rota precisa authenticar
 				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
