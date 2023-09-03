@@ -7,21 +7,22 @@ import com.stock.flex.entity.enums.Role;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PersonRequest {
+public class PersonResponse {
 	
-	private Long id;
+	private UUID id;
 	private String name;
 	private String email;
 	private String password;
 	private Set<String> roles = new HashSet<>();
 	
-	public PersonRequest() {
+	public PersonResponse() {
 		super();
 	}
 
-	public PersonRequest(Long id, String name, String email, Set<String> roles) {
+	public PersonResponse(UUID id, String name, String email, Set<String> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,7 +30,7 @@ public class PersonRequest {
 		this.roles = roles;
 	}
 	
-	public PersonRequest(Person person) {
+	public PersonResponse(Person person) {
 		super();
 		this.id = person.getId();
 		this.name = person.getName();
@@ -37,7 +38,7 @@ public class PersonRequest {
 		this.setRoles(person.getRoles());
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
@@ -57,7 +58,7 @@ public class PersonRequest {
 		return roles;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

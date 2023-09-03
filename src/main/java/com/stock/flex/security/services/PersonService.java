@@ -2,8 +2,9 @@ package com.stock.flex.security.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
-import com.stock.flex.resource.request.PersonRequest;
+import com.stock.flex.resource.request.PersonResponse;
 import com.stock.flex.entity.Person;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.resource.handler.DuplicationException;
@@ -19,7 +20,7 @@ public class PersonService {
 	@Autowired
 	private PersonRepository repository;
 	
-	public Person findById(Long id) {
+	public Person findById(UUID id) {
 		return repository.findById(id).orElseThrow(
 				() -> new NotFoundException("Person not found: " + id));
 	}
@@ -34,14 +35,13 @@ public class PersonService {
 	}
 	
 	public Person create(Person person) {
-		person.setId(null);
 		person.addRole(Role.USER);
 		checkEmailDuplication(person);
 		return repository.save(person);
 	}
 	
-	public PersonRequest create(PersonRequest dto) {
-		return new PersonRequest(create(new Person(dto)));
+	public PersonResponse create(PersonResponse dto) {
+		return new PersonResponse(create(new Person(dto)));
 	}
 	
 	public Person update(Person person) {
@@ -53,7 +53,7 @@ public class PersonService {
 		return repository.save(p);
 	}
 	
-	public void delete(Long id) {
+	public void delete(UUID id) {
 		final Person p = findById(id);
 		repository.delete(p);
 	}
@@ -61,7 +61,7 @@ public class PersonService {
 	private void checkEmailDuplication(Person person) {
 		final String email = person.getEmail();
 		if (email != null && email.length() > 0) {
-			final Long id = person.getId(); 
+			final UUID id = person.getId();
 			final Person p = repository.findByEmail(email).orElse(null);
 			if (p != null && Objects.equals(p.getEmail(), email) && !Objects.equals(p.getId(), id)) {
 				throw new DuplicationException("Email duplication: " + email);

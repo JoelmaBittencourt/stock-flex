@@ -1,7 +1,7 @@
 package com.stock.flex.entity;
 
 
-import com.stock.flex.resource.request.PersonRequest;
+import com.stock.flex.resource.request.PersonResponse;
 import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,13 +16,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-public class Person implements Serializable, UserDetails {
-	private static final long serialVersionUID = 1L;
+public class Person implements  UserDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_person_id")
-	@SequenceGenerator(name = "gen_person_id", sequenceName = "seq_person_id", allocationSize = 1)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
 	@Column(nullable = false, length = 50)
 	private String name;
@@ -42,7 +40,7 @@ public class Person implements Serializable, UserDetails {
 		super();
 	}
 
-	public Person(Long id, String name, String email, String password, Set<Role> roles) {
+	public Person(UUID id, String name, String email, String password, Set<Role> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,13 +56,13 @@ public class Person implements Serializable, UserDetails {
 		this.password = password;
 	}
 
-	public Person(PersonRequest dto) {
+	public Person(PersonResponse dto) {
 		this(dto.getName(), dto.getEmail(), dto.getPassword());
 		this.setId(dto.getId());
 		this.setStringRoles(dto.getRoles());
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
@@ -84,7 +82,7 @@ public class Person implements Serializable, UserDetails {
 		return roles.stream().map(r -> Role.fromId(r)).collect(Collectors.toSet());
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
