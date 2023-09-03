@@ -3,7 +3,7 @@ package com.stock.flex.security.services;
 import java.util.List;
 import java.util.Objects;
 
-import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.resource.request.PersonRequest;
 import com.stock.flex.entity.Person;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.resource.handler.DuplicationException;
@@ -40,8 +40,8 @@ public class PersonService {
 		return repository.save(person);
 	}
 	
-	public PersonDTO create(PersonDTO dto) {
-		return new PersonDTO(create(new Person(dto)));
+	public PersonRequest create(PersonRequest dto) {
+		return new PersonRequest(create(new Person(dto)));
 	}
 	
 	public Person update(Person person) {

@@ -2,7 +2,7 @@ package com.stock.flex.resource;
 
 import java.util.List;
 
-import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.resource.request.PersonRequest;
 import com.stock.flex.entity.Person;
 import com.stock.flex.security.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +27,18 @@ public class PersonController {
 	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping
-	public ResponseEntity<List<PersonDTO>> findAll() {
+	public ResponseEntity<List<PersonRequest>> findAll() {
 		final List<Person> persons = service.findAll();
-		final List<PersonDTO> dtos = persons.stream().map(p -> new PersonDTO(p)).toList();
+		final List<PersonRequest> dtos = persons.stream().map(p -> new PersonRequest(p)).toList();
 		return ResponseEntity.ok(dtos);
 	}
 	
-	public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO dto) {
+	public ResponseEntity<PersonRequest> create(@RequestBody PersonRequest dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return ResponseEntity.ok(service.create(dto));
 	}
 	
-	public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO dto) {
+	public ResponseEntity<PersonRequest> update(@RequestBody PersonRequest dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return ResponseEntity.ok(service.create(dto));
 	}

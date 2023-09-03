@@ -1,7 +1,7 @@
 package com.stock.flex.entity;
 
 
-import com.stock.flex.resource.request.PersonDTO;
+import com.stock.flex.resource.request.PersonRequest;
 import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,7 +58,7 @@ public class Person implements Serializable, UserDetails {
 		this.password = password;
 	}
 
-	public Person(PersonDTO dto) {
+	public Person(PersonRequest dto) {
 		this(dto.getName(), dto.getEmail(), dto.getPassword());
 		this.setId(dto.getId());
 		this.setStringRoles(dto.getRoles());

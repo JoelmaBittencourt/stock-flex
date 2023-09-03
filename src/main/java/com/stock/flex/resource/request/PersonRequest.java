@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class PersonDTO {
+public class PersonRequest {
 	
 	private Long id;
 	private String name;
@@ -17,11 +17,11 @@ public class PersonDTO {
 	private String password;
 	private Set<String> roles = new HashSet<>();
 	
-	public PersonDTO() {
+	public PersonRequest() {
 		super();
 	}
 
-	public PersonDTO(Long id, String name, String email, Set<String> roles) {
+	public PersonRequest(Long id, String name, String email, Set<String> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,7 +29,7 @@ public class PersonDTO {
 		this.roles = roles;
 	}
 	
-	public PersonDTO(Person person) {
+	public PersonRequest(Person person) {
 		super();
 		this.id = person.getId();
 		this.name = person.getName();

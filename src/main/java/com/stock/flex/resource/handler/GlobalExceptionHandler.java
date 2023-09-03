@@ -1,6 +1,6 @@
-package com.stock.flex.resource;
+package com.stock.flex.resource.handler;
 
-import com.stock.flex.resource.request.StandardErrorDTO;
+import com.stock.flex.resource.handler.request.StandardError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,9 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<StandardErrorDTO> exception(Exception ex, HttpServletRequest request) {
+	public ResponseEntity<StandardError> exception(Exception ex, HttpServletRequest request) {
 		return ResponseEntity.badRequest().body(
-				new StandardErrorDTO(HttpStatus.BAD_REQUEST, ex, request));
+				new StandardError(HttpStatus.BAD_REQUEST, ex, request));
 	}
 
 }

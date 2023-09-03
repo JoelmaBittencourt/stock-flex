@@ -1,8 +1,8 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.resource.request.AuthRequest;
-import com.stock.flex.resource.request.AuthResponse;
-import com.stock.flex.resource.request.RegisterRequestDTO;
+import com.stock.flex.resource.response.AuthResponse;
+import com.stock.flex.resource.request.RegisterRequest;
 import com.stock.flex.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class AuthController {
 	private AuthService authService;
 
 	@PostMapping("/register")
-	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequestDTO dto) {
+	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest dto) {
 		return ResponseEntity.ok(authService.register(dto));
 	}
 	

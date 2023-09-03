@@ -1,8 +1,8 @@
 package com.stock.flex.security.services;
 
 import com.stock.flex.resource.request.AuthRequest;
-import com.stock.flex.resource.request.AuthResponse;
-import com.stock.flex.resource.request.RegisterRequestDTO;
+import com.stock.flex.resource.response.AuthResponse;
+import com.stock.flex.resource.request.RegisterRequest;
 import com.stock.flex.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,12 +27,12 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	public AuthResponse register(RegisterRequestDTO dto) {
+	public AuthResponse register(RegisterRequest dto) {
 		
 		Person person = new Person();
-		person.setName(dto.getName());
-		person.setEmail(dto.getEmail());
-		person.setPassword(passwordEncoder.encode(dto.getPassword()));
+		person.setName(dto.name());
+		person.setEmail(dto.email());
+		person.setPassword(passwordEncoder.encode(dto.password()));
 		
 		person = personService.create(person);
 		

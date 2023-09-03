@@ -1,17 +1,17 @@
-package com.stock.flex.resource.request;
+package com.stock.flex.resource.handler.request;
 
 import org.springframework.http.HttpStatus;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class StandardErrorDTO {
+public class StandardError {
 
 	private Integer status;
 	private String error;
 	private String message;
 	private String path;
 	
-	public StandardErrorDTO(HttpStatus status, Throwable ex, HttpServletRequest request) {
+	public StandardError(HttpStatus status, Throwable ex, HttpServletRequest request) {
 		this.status = status.value();
 		this.error = ex.getClass().getSimpleName();
 		this.message = ex.getMessage();
