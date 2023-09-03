@@ -1,4 +1,4 @@
-package com.stock.flex.security.services;
+package com.stock.flex.security.service;
 
 import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;

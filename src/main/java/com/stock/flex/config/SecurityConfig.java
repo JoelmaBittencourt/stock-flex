@@ -25,12 +25,6 @@ import static com.stock.flex.utils.Security.PUBLIC_MATCHERS;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-	private static final String[] PUBLIC = new String[] {
-			"/test/**",
-			"/auth/**"
-		};
-	
 	@Autowired
 	private UserDetailsService userDetailsService;
 	

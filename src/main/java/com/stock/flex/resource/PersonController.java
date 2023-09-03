@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.stock.flex.resource.request.PersonResponse;
 import com.stock.flex.entity.Person;
-import com.stock.flex.security.services.PersonService;
+import com.stock.flex.security.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

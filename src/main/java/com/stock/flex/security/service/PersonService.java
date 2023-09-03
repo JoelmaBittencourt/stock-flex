@@ -1,4 +1,4 @@
-package com.stock.flex.security.services;
+package com.stock.flex.security.service;
 
 import java.util.List;
 import java.util.Objects;
