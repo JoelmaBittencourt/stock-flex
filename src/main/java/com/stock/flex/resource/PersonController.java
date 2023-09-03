@@ -8,12 +8,7 @@ import com.stock.flex.security.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -32,7 +27,8 @@ public class PersonController {
 		final List<PersonRequest> dtos = persons.stream().map(p -> new PersonRequest(p)).toList();
 		return ResponseEntity.ok(dtos);
 	}
-	
+
+	@PostMapping
 	public ResponseEntity<PersonRequest> create(@RequestBody PersonRequest dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return ResponseEntity.ok(service.create(dto));
