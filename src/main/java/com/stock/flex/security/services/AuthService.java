@@ -1,7 +1,7 @@
 package com.stock.flex.security.services;
 
-import com.stock.flex.resource.request.AuthRequestDTO;
-import com.stock.flex.resource.request.AuthResponseDTO;
+import com.stock.flex.resource.request.AuthRequest;
+import com.stock.flex.resource.request.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequestDTO;
 import com.stock.flex.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	public AuthResponseDTO register(RegisterRequestDTO dto) {
+	public AuthResponse register(RegisterRequestDTO dto) {
 		
 		Person person = new Person();
 		person.setName(dto.getName());
@@ -36,18 +36,18 @@ public class AuthService {
 		
 		person = personService.create(person);
 		
-		return new AuthResponseDTO(jwtService.generateToken(person.getEmail()));
+		return new AuthResponse(jwtService.generateToken(person.getEmail()));
 	}
 	
-	public AuthResponseDTO authenticate(AuthRequestDTO dto) {
+	public AuthResponse authenticate(AuthRequest dto) {
 		
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
-						dto.getEmail(), 
-						dto.getPassword()));
+						dto.email(),
+						dto.password()));
 		
-		final Person person = personService.findByEmail(dto.getEmail());
-		return new AuthResponseDTO(jwtService.generateToken(person.getEmail()));
+		final Person person = personService.findByEmail(dto.email());
+		return new AuthResponse(jwtService.generateToken(person.getEmail()));
 	}
 	
 	
