@@ -3,7 +3,8 @@ package com.stock.flex.utils;
 public class Security {
     public static final String[] PUBLIC_MATCHERS = {
             "/person/**",
-            "/auth/**"
+            "/auth/**",
+            "/test/**",
     };
 
     public static final String[] PUBLIC_MATCHERS_POST = {
