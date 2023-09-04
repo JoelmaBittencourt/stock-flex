@@ -1,6 +1,8 @@
 package com.stock.flex.resource;
 
+import com.stock.flex.entity.CategoryEntity;
 import com.stock.flex.entity.ProductEntity;
+import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
 import com.stock.flex.resource.request.ProductRequest;
 import com.stock.flex.resource.response.ProductResponse;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,10 +23,26 @@ public class ProductResource {
     @Autowired
     ProductRepository repository;
 
-    @PostMapping
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @PostMapping("/{categoryId}")
     @Transactional
-    public ResponseEntity<ProductResponse> create(@RequestBody ProductRequest request) {
-        ProductEntity savedProduct = repository.save(new ProductEntity(request));
+    public ResponseEntity<?> create(
+            @PathVariable UUID categoryId,
+            @RequestBody ProductRequest request
+    ) {
+        Optional<CategoryEntity> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            String errorMessage = "A categoria associada ao produto não foi encontrada.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        ProductEntity newProduct = new ProductEntity(request);
+        newProduct.setCategory(categoryOptional.get());
+
+        ProductEntity savedProduct = repository.save(newProduct);
+
         ProductResponse response = new ProductResponse(savedProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

@@ -1,9 +1,12 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
+import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.CategoryRepository;
+import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.CategoryRequest;
 import com.stock.flex.resource.response.CategoryResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,11 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -29,14 +32,35 @@ public class CategoryResource {
     @Autowired
     CategoryRepository repository;
 
-    @PostMapping
-    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CategoryRequest request, UriComponentsBuilder uriBuilder) {
-        var category = new CategoryEntity(request);
-        repository.save(category);
-        var uri = uriBuilder.path("/category/{id}").buildAndExpand(category.getId()).toUri();
+    @Autowired
+    StockRepository stockRepository;
 
-        return ResponseEntity.created(uri).body(new CategoryResponse(category));
+
+    @PostMapping("/{stockId}")
+    @Transactional
+    public ResponseEntity<?> create(
+            @PathVariable UUID stockId,
+            @RequestBody CategoryRequest request
+    ) {
+        // Verifique se o estoque associado à categoria existe
+        Optional<StockEntity> stockOptional = stockRepository.findById(stockId);
+        if (stockOptional.isEmpty()) {
+            String errorMessage = "O estoque associado à categoria não foi encontrado.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        // Crie a categoria e associe-a ao estoque
+        CategoryEntity newCategory = new CategoryEntity(request);
+        newCategory.setStock(stockOptional.get());
+
+        // Salve a categoria no banco de dados
+        CategoryEntity savedCategory = repository.save(newCategory);
+
+        // Retorne uma resposta de sucesso com a categoria criada
+        CategoryResponse response = new CategoryResponse(savedCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> get() {

@@ -1,0 +1,102 @@
+{
+  "info": {
+    "_postman_id": "your_postman_id",
+    "name": "Stock Flex API Collection",
+    "description": "Collection of API endpoints for Stock Flex application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"User Name\",\n  \"email\": \"user@example.com\",\n  \"password\": \"userpassword\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/user",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Stock",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Stock Name\",\n  \"description\": \"Stock Description\",\n  \"category\": [\n    {\n      \"name\": \"Category 1\",\n      \"description\": \"Category Description 1\",\n      \"products\": [\n        {\n          \"name\": \"Product 1\",\n          \"description\": \"Product Description 1\",\n          \"price\": 19.99,\n          \"quantity\": 100,\n          \"displayOrder\": 1,\n          \"starQuantity\": 4\n        },\n        {\n          \"name\": \"Product 2\",\n          \"description\": \"Product Description 2\",\n          \"price\": 29.99,\n          \"quantity\": 50,\n          \"displayOrder\": 2,\n          \"starQuantity\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"Category 2\",\n      \"description\": \"Category Description 2\",\n      \"products\": []\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/stock",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "stock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Product Name\",\n  \"description\": \"Product Description\",\n  \"price\": 19.99,\n  \"quantity\": 100,\n  \"displayOrder\": 1,\n  \"starQuantity\": 4\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/product",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "product"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Category",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Category Name\",\n  \"description\": \"Category Description\",\n  \"products\": [\n    {\n      \"name\": \"Product 1\",\n      \"description\": \"Product Description 1\",\n      \"price\": 19.99,\n      \"quantity\": 100,\n      \"displayOrder\": 1,\n      \"starQuantity\": 4\n    },\n    {\n      \"name\": \"Product 2\",\n      \"description\": \"Product Description 2\",\n      \"price\": 29.99,\n      \"quantity\": 50,\n      \"displayOrder\": 2,\n      \"starQuantity\": 3\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/category",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "category"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

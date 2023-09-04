@@ -37,8 +37,11 @@ public class StockEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private Person user;
 
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private StockEntity stock;
 
     public StockEntity(StockRequest request) {
         this.name = request.name();
