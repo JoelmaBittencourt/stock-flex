@@ -4,6 +4,7 @@ import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequest;
 import com.stock.flex.security.service.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

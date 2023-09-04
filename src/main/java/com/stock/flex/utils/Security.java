@@ -4,6 +4,7 @@ public class Security {
     public static final String[] PUBLIC_MATCHERS = {
             "/auth/**",
             "/test/**",
+            "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**"
     };
 
     public static final String[] PRIVATE_MATCHERS = {

@@ -22,12 +22,4 @@ public class DefaultExceptionHandler {
         return ResponseEntity.badRequest().body(errors.stream().map(ValidationError::new).toList());
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<StandardError> handleSecurityException(Exception ex, HttpServletRequest request) {
-//        return ResponseEntity.badRequest().body(
-//                new StandardError(HttpStatus.BAD_REQUEST, ex, request));
-//    }
-
-
-
 }

@@ -6,6 +6,7 @@ import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
 import com.stock.flex.resource.request.ProductRequest;
 import com.stock.flex.resource.response.ProductResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/product")
 public class ProductResource {
 
@@ -32,26 +34,20 @@ public class ProductResource {
             @PathVariable UUID categoryId,
             @RequestBody ProductRequest request
     ) {
-        // Verifique se a categoria associada ao produto existe
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(categoryId);
         if (categoryOptional.isEmpty()) {
             String errorMessage = "A categoria associada ao produto não foi encontrada.";
             return ResponseEntity.badRequest().body(errorMessage);
         }
 
-        // Crie o produto e associe-o à categoria
         ProductEntity newProduct = new ProductEntity(request);
         newProduct.setCategory(categoryOptional.get());
 
-        // Salve o produto no banco de dados
         ProductEntity savedProduct = repository.save(newProduct);
 
-        // Retorne uma resposta de sucesso com o produto criado
         ProductResponse response = new ProductResponse(savedProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-
 
     @GetMapping
     public ResponseEntity<List<ProductResponse>> get() {

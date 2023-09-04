@@ -36,11 +36,10 @@ public class SecurityConfig {
 		return httpSecurity
 				.csrf().disable()
 				.authorizeHttpRequests()
-				.requestMatchers(PUBLIC_MATCHERS ).permitAll()//não precisa se authenticar
-				.requestMatchers(PRIVATE_MATCHERS).hasAuthority("ADMIN") 	//só admin pode deletar
-				.requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") 	//só admin pode deletar
-				//.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")		// If UserDetails.getAuthorities return [ROLE_ADMIN, ...]
-				.anyRequest().authenticated()//qualquer outra rota precisa authenticar
+				.requestMatchers(PUBLIC_MATCHERS ).permitAll()
+				.requestMatchers(PRIVATE_MATCHERS).hasAuthority("ADMIN")
+				.requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
+				.anyRequest().authenticated()
 				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()

@@ -70,12 +70,4 @@ public class PersonService {
 		}
 	}
 
-//	public static Person authenticated() {
-//		try {
-//			return (Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
-//
 }

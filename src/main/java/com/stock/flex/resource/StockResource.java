@@ -5,6 +5,7 @@ import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.StockRequest;
 import com.stock.flex.resource.response.StockResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 
 @RestController
+@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/stock")
 public class StockResource {
 
