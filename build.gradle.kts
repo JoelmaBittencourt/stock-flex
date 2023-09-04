@@ -33,6 +33,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
 	runtimeOnly("com.oracle.database.jdbc:ojdbc8")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.security:spring-security-test")
