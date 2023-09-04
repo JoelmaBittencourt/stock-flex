@@ -4,6 +4,7 @@ package com.stock.flex.entity;
 import com.stock.flex.resource.request.PersonResponse;
 import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Entity
 public class Person implements  UserDetails {
 
+	@Getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
@@ -31,6 +33,16 @@ public class Person implements  UserDetails {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "person_role")
 	private Set<Integer> roles = new HashSet<>(Arrays.asList(Role.USER.getId()));
+
+
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private Person user;
+
+	@ManyToOne
+	@JoinColumn(name = "stock_id")
+	private StockEntity stock;
 
 	public Person() {
 		super();
@@ -56,10 +68,6 @@ public class Person implements  UserDetails {
 		this(dto.getName(), dto.getEmail(), dto.getPassword());
 		this.setId(dto.getId());
 		this.setStringRoles(dto.getRoles());
-	}
-
-	public UUID getId() {
-		return id;
 	}
 
 	public String getName() {

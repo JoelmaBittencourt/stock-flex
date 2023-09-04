@@ -32,6 +32,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	compileOnly("org.projectlombok:lombok")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.oracle.database.jdbc:ojdbc8")
 	annotationProcessor("org.projectlombok:lombok")

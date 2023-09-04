@@ -11,6 +11,7 @@ import com.stock.flex.resource.handler.DuplicationException;
 import com.stock.flex.resource.handler.NotFoundException;
 import com.stock.flex.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -69,4 +70,12 @@ public class PersonService {
 		}
 	}
 
+//	public static Person authenticated() {
+//		try {
+//			return (Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		} catch (Exception e) {
+//			return null;
+//		}
+//	}
+//
 }
