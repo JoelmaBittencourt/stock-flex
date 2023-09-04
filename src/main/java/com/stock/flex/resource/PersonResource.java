@@ -6,15 +6,16 @@ import java.util.UUID;
 import com.stock.flex.resource.request.PersonResponse;
 import com.stock.flex.entity.Person;
 import com.stock.flex.security.service.PersonService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
+@Hidden
 @RestController
 @RequestMapping("/person")
-public class PersonController {
+public class PersonResource {
 	
 	@Autowired
 	private PersonService service;
