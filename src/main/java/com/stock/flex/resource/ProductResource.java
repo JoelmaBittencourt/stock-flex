@@ -6,7 +6,6 @@ import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
 import com.stock.flex.resource.request.ProductRequest;
 import com.stock.flex.resource.response.ProductResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
