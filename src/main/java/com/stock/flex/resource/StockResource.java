@@ -20,11 +20,9 @@ import java.util.UUID;
 
 
 @RestController
-@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/stock")
 public class StockResource {
 
-    // ...
     @Autowired
 StockRepository repository;
 
@@ -81,7 +79,6 @@ StockRepository repository;
             throw new Exception("Acesso negado! Você não tem permissão para atualizar este estoque.");
         }
 
-        // Realize a atualização apenas se o estoque pertencer ao usuário autenticado
         stock.updateInfo(request);
 
         return ResponseEntity.ok(new StockResponse(stock));
@@ -103,7 +100,6 @@ StockRepository repository;
             throw new Exception("Acesso negado! Você não tem permissão para excluir este estoque.");
         }
 
-        // Realize a exclusão apenas se o estoque pertencer ao usuário autenticado
         repository.deleteById(id);
 
         return ResponseEntity.ok().build();

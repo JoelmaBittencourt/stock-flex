@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/product")
 public class ProductResource {
 

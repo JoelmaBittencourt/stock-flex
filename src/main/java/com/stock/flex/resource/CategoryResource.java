@@ -27,7 +27,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/category")
 public class CategoryResource {
 
