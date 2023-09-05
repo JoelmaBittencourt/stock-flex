@@ -2,7 +2,41 @@
 
 Este é um projeto de gestão de estoque desenvolvido em Java com o uso do Spring Framework. Ele oferece uma solução para gerenciar estoques, categorias e produtos.
 
+# Como rodar o projeto
+
+Para rodar o projeto, siga estas etapas:
+
+1. **Instale as ferramentas necessárias**
+
+Se você ainda não instalou as ferramentas necessárias, siga as instruções na seção "Instalação das Ferramentas" do README.
+
+2. **Obtenha o projeto**
+
+Clone o projeto do GitHub:
+
+**Execute o Docker Compose**
+
+O comando `docker-compose up -d` iniciará o projeto em um ambiente de contêiner:
+execute o comando ./gradlew clean build.
+./gradlew bootrun.
+
+
 ## Ferramentas Necessárias para Executar o Projeto
+
+#### baixe as ferramentas necessarias com arquivo sh seguindo os comandos:
+ Dê permissão de execução ao script
+
+
+``
+chmod +x ferramentas.sh
+``
+
+Execute o script para instalar as ferramentas
+
+``
+bash
+./ferramentas.sh
+``
 
 Certifique-se de ter as seguintes ferramentas e recursos instalados em seu ambiente de desenvolvimento:
 
@@ -119,6 +153,10 @@ O projeto permite:
 - Criar, atualizar e excluir categorias em um estoque.
 - Criar, atualizar e excluir produtos em uma categoria.
 - Autenticar usuários para acessar recursos protegidos.
+
+### Acessando a Documentação com Swagger
+
+[swagger](http://localhost:8080/swagger-ui/index.html#/)
 
 ## Contribuindo
 
