@@ -2,162 +2,174 @@
 
 Este é um projeto de gestão de estoque desenvolvido em Java com o uso do Spring Framework. Ele oferece uma solução para gerenciar estoques, categorias e produtos.
 
-# Como rodar o projeto
+## Como rodar o projeto
 
 Para rodar o projeto, siga estas etapas:
 
-1. **Instale as ferramentas necessárias**
+### 1. Instale as ferramentas necessárias
 
-Se você ainda não instalou as ferramentas necessárias, siga as instruções na seção "Instalação das Ferramentas" do README.
+Se você ainda não instalou as ferramentas necessárias, siga as instruções na seção "Instalação das Ferramentas" abaixo.
 
-2. **Obtenha o projeto**
+### 2. Obtenha o projeto
 
 Clone o projeto do GitHub:
 
-**Execute o Docker Compose**
+```bash
+git clone https://github.com/seu-usuario/seu-projeto.git
+```   
+## Execute o Docker Compose
 
-O comando `docker-compose up -d` iniciará o projeto em um ambiente de contêiner:
-execute o comando ./gradlew clean build.
-./gradlew bootrun.
+Para iniciar o projeto em um ambiente de contêiner, execute o seguinte comando:
 
+```bash
+docker-compose up -d
+```
 
-## Ferramentas Necessárias para Executar o Projeto
+```bash
+    ./gradlew clean build
+    ./gradlew bootrun
+```
 
-#### baixe as ferramentas necessarias com arquivo sh seguindo os comandos:
- Dê permissão de execução ao script
-
-
-``
-chmod +x ferramentas.sh
-``
-
-Execute o script para instalar as ferramentas
-
-``
-bash
-./ferramentas.sh
-``
+Ferramentas Necessárias para Executar o Projeto
 
 Certifique-se de ter as seguintes ferramentas e recursos instalados em seu ambiente de desenvolvimento:
 
-- **Docker**: Utilizado para criar e gerenciar contêineres.
-- **Docker Compose**: Utilizado para definir e executar serviços multi-contêiner em aplicativos.
-- **Java 17**: A versão mais recente do Java é necessária para executar o aplicativo.
-- **SQL Developer ou DBeaver**: Um cliente SQL para interagir com o banco de dados.
-- **Postman**: Uma ferramenta para testar APIs.
-- **IntelliJ IDEA**: Um ambiente de desenvolvimento integrado (IDE) para Java.
+    Docker: Utilizado para criar e gerenciar contêineres.
+    Docker Compose: Utilizado para definir e executar serviços multi-contêiner em aplicativos.
+    Java 17: A versão mais recente do Java é necessária para executar o aplicativo.
+    SQL Developer ou DBeaver: Um cliente SQL para interagir com o banco de dados.
+    Postman: Uma ferramenta para testar APIs.
+    IntelliJ IDEA: Um ambiente de desenvolvimento integrado (IDE) para Java.
 
-## Instalação das Ferramentas
+Instalação das Ferramentas
 
 Siga estas etapas para configurar o ambiente e executar o projeto:
 
-1. **Docker e Docker Compose**:
+    Docker e Docker Compose:
 
-   Certifique-se de ter o Docker e o Docker Compose instalados em seu sistema. Você pode obtê-los em [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/).
+    Certifique-se de ter o Docker e o Docker Compose instalados em seu sistema. Você pode obtê-los em Docker e Docker Compose.
 
-2. **Java 17**:
+    Java 17:
 
-   Instale o Java 17 em seu sistema. Você pode encontrar a versão mais recente em [Oracle](https://www.oracle.com/java/technologies/javase-downloads.html) ou [OpenJDK](https://adoptopenjdk.net/).
+    Instale o Java 17 em seu sistema. Você pode encontrar a versão mais recente em Oracle ou OpenJDK.
 
-3. **SQL Developer ou DBeaver**:
+    SQL Developer ou DBeaver:
 
-   Escolha entre o SQL Developer e o DBeaver como seu cliente de banco de dados SQL e siga as instruções de instalação nos respectivos sites:
-    - [SQL Developer](https://www.oracle.com/database/technologies/appdev/sqldeveloper-landing.html)
-    - [DBeaver](https://dbeaver.io/download/)
+    Escolha entre o SQL Developer e o DBeaver como seu cliente de banco de dados SQL e siga as instruções de instalação nos respectivos sites:
+        SQL Developer
+        DBeaver
 
-4. **Postman**:
+    Postman:
 
-   Baixe e instale o Postman em [Postman](https://www.postman.com/downloads/).
+    Baixe e instale o Postman em Postman.
 
-5. **IntelliJ IDEA**:
+    IntelliJ IDEA:
 
-   Instale o IntelliJ IDEA em [IntelliJ IDEA](https://www.jetbrains.com/idea/download/).
+    Instale o IntelliJ IDEA em IntelliJ IDEA.
 
-## Uso
-
-### Autenticação
+Uso
+Autenticação
 
 Para acessar os recursos protegidos, você precisará se autenticar. Isso pode ser feito por meio de uma solicitação HTTP com suas credenciais, geralmente um nome de usuário e senha.
+Gerenciamento de Estoque
+Listar Estoques
 
-### Gerenciamento de Estoque
+    Método HTTP: GET
+    Descrição: Este método permite listar todos os estoques disponíveis na aplicação.
 
-#### Listar Estoques
+Criar Estoque
 
-- **Método HTTP:** GET
-- **Descrição:** Este método permite listar todos os estoques disponíveis na aplicação.
+    Método HTTP: POST
+    Descrição: Este método permite criar um novo estoque especificando seu nome e descrição.
 
-#### Criar Estoque
+Atualizar Estoque
 
-- **Método HTTP:** POST
-- **Descrição:** Este método permite criar um novo estoque especificando seu nome e descrição.
+    Método HTTP: PUT
+    Descrição: Este método permite atualizar os detalhes de um estoque existente, como nome ou descrição.
 
-#### Atualizar Estoque
+Excluir Estoque
 
-- **Método HTTP:** PUT
-- **Descrição:** Este método permite atualizar os detalhes de um estoque existente, como nome ou descrição.
+    Método HTTP: DELETE
+    Descrição: Este método permite remover um estoque da aplicação.
 
-#### Excluir Estoque
+Gerenciamento de Categorias
+Listar Categorias
 
-- **Método HTTP:** DELETE
-- **Descrição:** Este método permite remover um estoque da aplicação.
+    Método HTTP: GET
+    Descrição: Este método permite listar todas as categorias disponíveis em um estoque.
 
-### Gerenciamento de Categorias
+Criar Categoria
 
-#### Listar Categorias
+    Método HTTP: POST
+    Descrição: Este método permite criar uma nova categoria em um estoque especificando seu nome e descrição.
 
-- **Método HTTP:** GET
-- **Descrição:** Este método permite listar todas as categorias disponíveis em um estoque.
+Atualizar Categoria
 
-#### Criar Categoria
+    Método HTTP: PUT
+    Descrição: Este método permite atualizar os detalhes de uma categoria existente em um estoque.
 
-- **Método HTTP:** POST
-- **Descrição:** Este método permite criar uma nova categoria em um estoque especificando seu nome e descrição.
+Excluir Categoria
 
-#### Atualizar Categoria
+    Método HTTP: DELETE
+    Descrição: Este método permite remover uma categoria de um estoque.
 
-- **Método HTTP:** PUT
-- **Descrição:** Este método permite atualizar os detalhes de uma categoria existente em um estoque.
+Gerenciamento de Produtos
+Listar Produtos
 
-#### Excluir Categoria
+    Método HTTP: GET
+    Descrição: Este método permite listar todos os produtos disponíveis em uma categoria.
 
-- **Método HTTP:** DELETE
-- **Descrição:** Este método permite remover uma categoria de um estoque.
+Criar Produto
 
-### Gerenciamento de Produtos
+    Método HTTP: POST
+    Descrição: Este método permite criar um novo produto em uma categoria especificando seu nome, descrição e preço.
 
-#### Listar Produtos
+Atualizar Produto
 
-- **Método HTTP:** GET
-- **Descrição:** Este método permite listar todos os produtos disponíveis em uma categoria.
+    Método HTTP: PUT
+    Descrição: Este método permite atualizar os detalhes de um produto existente em uma categoria.
 
-#### Criar Produto
+Excluir Produto
 
-- **Método HTTP:** POST
-- **Descrição:** Este método permite criar um novo produto em uma categoria especificando seu nome, descrição e preço.
+    Método HTTP: DELETE
+    Descrição: Este método permite remover um produto de uma categoria.
 
-#### Atualizar Produto
-
-- **Método HTTP:** PUT
-- **Descrição:** Este método permite atualizar os detalhes de um produto existente em uma categoria.
-
-#### Excluir Produto
-
-- **Método HTTP:** DELETE
-- **Descrição:** Este método permite remover um produto de uma categoria.
-
-## Funcionalidades
+Funcionalidades
 
 O projeto permite:
 
-- Gerenciar estoques.
-- Criar, atualizar e excluir categorias em um estoque.
-- Criar, atualizar e excluir produtos em uma categoria.
-- Autenticar usuários para acessar recursos protegidos.
+    Gerenciar estoques.
+    Criar, atualizar e excluir categorias em um estoque.
+    Criar, atualizar e excluir produtos em uma categoria.
+    Autenticar usuários para acessar recursos protegidos.
 
-### Acessando a Documentação com Swagger
+Acessando a Documentação com Swagger
 
 [swagger](http://localhost:8080/swagger-ui/index.html#/)
 
-## Contribuindo
+### Script de Instalação de Ferramentas
 
-Sinta-se à vontade para contribuir com melhorias ou correções para este projeto. Abra um problema ou envie uma solicitação de pull request para colaborar.
+Você pode usar o script ferramentas.sh para automatizar a instalação das ferramentas necessárias. Siga as etapas abaixo para usá-lo:
+
+    Dê permissão de execução ao script
+
+    Abra um terminal e execute o seguinte comando para dar permissão de execução ao script:
+
+ ``` shell
+
+chmod +x ferramentas.sh
+```
+
+Execute o script para instalar as ferramentas
+
+Agora, execute o script usando o seguinte comando:
+
+```shell
+    ./ferramentas.sh
+```
+
+    Isso executará o script e instalará as ferramentas necessárias em seu sistema. Certifique-se de que o script está localizado no diretório correto e que você está no diretório correto ao executá-lo.
+
+Contribuindo
+
+Sinta-se à vontade para contribuir com melhorias ou correções para este projeto. Abra um problema ou envie uma solicitação de pull request para
