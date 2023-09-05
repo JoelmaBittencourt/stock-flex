@@ -1,0 +1,60 @@
+{
+  "person": {
+    "id": "UUID",
+    "name": "Nome da Pessoa",
+    "email": "email@exemplo.com",
+    "password": "Senha",
+    "roles": [
+      1,
+      2
+    ]
+  },
+  "stockEntity": {
+    "id": "UUID",
+    "name": "Nome do Estoque",
+    "description": "Descrição do Estoque",
+    "category": [
+      {
+        "id": "UUID",
+        "name": "Nome da Categoria",
+        "description": "Descrição da Categoria",
+        "products": [
+          {
+            "id": "UUID",
+            "name": "Nome do Produto",
+            "description": "Descrição do Produto",
+            "price": 10.0,
+            "quantity": 100,
+            "displayOrder": 1,
+            "starQuantity": 4
+          },
+          {
+            "id": "UUID",
+            "name": "Nome do Produto 2",
+            "description": "Descrição do Produto 2",
+            "price": 15.0,
+            "quantity": 50,
+            "displayOrder": 2,
+            "starQuantity": 3
+          }
+        ]
+      },
+      {
+        "id": "UUID",
+        "name": "Nome da Categoria 2",
+        "description": "Descrição da Categoria 2",
+        "products": [
+          {
+            "id": "UUID",
+            "name": "Nome do Produto 3",
+            "description": "Descrição do Produto 3",
+            "price": 20.0,
+            "quantity": 75,
+            "displayOrder": 1,
+            "starQuantity": 5
+          }
+        ]
+      }
+    ]
+  }
+}
