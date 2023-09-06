@@ -1,6 +1,7 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
+import com.stock.flex.entity.Person;
 import com.stock.flex.entity.ProductEntity;
 import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
@@ -11,9 +12,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,16 +35,25 @@ public class ProductResource {
     @Transactional
     public ResponseEntity<?> create(
             @PathVariable UUID categoryId,
-            @RequestBody ProductRequest request
-    ) {
+            @RequestBody ProductRequest request,
+            @AuthenticationPrincipal Person userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(categoryId);
         if (categoryOptional.isEmpty()) {
-            String errorMessage = "A categoria associada ao produto não foi encontrada.";
-            return ResponseEntity.badRequest().body(errorMessage);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A categoria associada ao produto não foi encontrada.");
+        }
+
+        CategoryEntity category = categoryOptional.get();
+        if (!category.getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para criar um produto nesta categoria.");
         }
 
         ProductEntity newProduct = new ProductEntity(request);
-        newProduct.setCategory(categoryOptional.get());
+        newProduct.setCategory(category);
 
         ProductEntity savedProduct = repository.save(newProduct);
 
@@ -50,29 +62,91 @@ public class ProductResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> get() {
-        var product = repository.findAll().stream().map(ProductResponse::new).toList();
-        return ResponseEntity.ok(product);
+    public ResponseEntity<List<ProductResponse>> get(@AuthenticationPrincipal Person userSpringSecurity) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        List<ProductEntity> products = repository.findByCategoryStockUser(userSpringSecurity);
+
+        List<ProductResponse> productResponses = products.stream().map(ProductResponse::new).toList();
+
+        return ResponseEntity.ok(productResponses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable UUID id) {
-        var product = repository.getById(id);
+    public ResponseEntity getById(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal Person userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<ProductEntity> productOptional = repository.findById(id);
+        if (productOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
+        }
+
+        ProductEntity product = productOptional.get();
+
+        if (!product.getCategory().getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para acessar este produto.");
+        }
+
         return ResponseEntity.ok(new ProductResponse(product));
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ProductRequest> update(@PathVariable UUID id, @RequestBody ProductRequest request) {
-        var product = repository.getReferenceById(id);
+    public ResponseEntity<?> update(
+            @PathVariable UUID id,
+            @RequestBody ProductRequest request,
+            @AuthenticationPrincipal Person userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<ProductEntity> productOptional = repository.findById(id);
+        if (productOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
+        }
+
+        ProductEntity product = productOptional.get();
+
+        if (!product.getCategory().getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para atualizar este produto.");
+        }
+
         product.updateInfo(request);
-        return ResponseEntity.ok(new ProductRequest(product));
+
+        ProductRequest updatedProductRequest = new ProductRequest(product);
+        return ResponseEntity.ok(updatedProductRequest);
     }
 
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable UUID id) {
+    public ResponseEntity delete(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal Person userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<ProductEntity> productOptional = repository.findById(id);
+        if (productOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
+        }
+
+        ProductEntity product = productOptional.get();
+
+        if (!product.getCategory().getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para excluir este produto.");
+        }
+
         repository.deleteById(id);
         return ResponseEntity.ok().build();
     }
