@@ -173,3 +173,9 @@ Agora, execute o script usando o seguinte comando:
 Contribuindo
 
 Sinta-se à vontade para contribuir com melhorias ou correções para este projeto. Abra um problema ou envie uma solicitação de pull request para
+
+
+java -jar seu-aplicativo.jar --spring.profiles.active=qa
+
+
+-Dspring.active=local
