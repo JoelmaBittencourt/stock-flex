@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.stock.flex.resource.request.PersonResponse;
-import com.stock.flex.entity.Person;
+import com.stock.flex.entity.PersonEntity;
 import com.stock.flex.security.service.PersonService;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,8 @@ public class PersonResource {
 	
 	@GetMapping
 	public ResponseEntity<List<PersonResponse>> findAll() {
-		final List<Person> persons = service.findAll();
-		final List<PersonResponse> dtos = persons.stream().map(p -> new PersonResponse(p)).toList();
+		final List<PersonEntity> personEntities = service.findAll();
+		final List<PersonResponse> dtos = personEntities.stream().map(p -> new PersonResponse(p)).toList();
 		return ResponseEntity.ok(dtos);
 	}
 

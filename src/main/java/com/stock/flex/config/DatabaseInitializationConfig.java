@@ -1,6 +1,6 @@
 package com.stock.flex.config;
 
-import com.stock.flex.entity.Person;
+import com.stock.flex.entity.PersonEntity;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.security.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class DatabaseInitializationConfig {
         return args -> {
             System.out.println("Initializing database...");
 
-            final Person user = new Person("Joelma2", "joelmaty65a@mail.com", passwordEncoder.encode("123"));
-            final Person admin = new Person("stockflex2", "stockflextryh@mail.com", passwordEncoder.encode("123"));
+            final PersonEntity user = new PersonEntity("Joelma2", "joelmaty65a@mail.com", passwordEncoder.encode("123"));
+            final PersonEntity admin = new PersonEntity("stockflex2", "stockflextryh@mail.com", passwordEncoder.encode("123"));
 
             admin.addRole(Role.ADMIN);
 

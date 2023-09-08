@@ -1,6 +1,6 @@
 package com.stock.flex.resource;
 
-import com.stock.flex.entity.Person;
+import com.stock.flex.entity.PersonEntity;
 import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.StockRequest;
@@ -31,7 +31,7 @@ StockRepository repository;
     @Transactional
     public ResponseEntity<StockResponse> create(
             @RequestBody StockRequest request,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -50,7 +50,7 @@ StockRepository repository;
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<StockResponse>> get(
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -68,7 +68,7 @@ StockRepository repository;
     public ResponseEntity<StockResponse> update(
             @PathVariable UUID id,
             @RequestBody StockRequest request,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -89,7 +89,7 @@ StockRepository repository;
     @Transactional
     public ResponseEntity delete(
             @PathVariable UUID id,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");

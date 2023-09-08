@@ -1,7 +1,7 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
-import com.stock.flex.entity.Person;
+import com.stock.flex.entity.PersonEntity;
 import com.stock.flex.entity.ProductEntity;
 import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
@@ -36,7 +36,7 @@ public class ProductResource {
     public ResponseEntity<?> create(
             @PathVariable UUID categoryId,
             @RequestBody ProductRequest request,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -62,7 +62,7 @@ public class ProductResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> get(@AuthenticationPrincipal Person userSpringSecurity) throws Exception {
+    public ResponseEntity<List<ProductResponse>> get(@AuthenticationPrincipal PersonEntity userSpringSecurity) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
@@ -77,7 +77,7 @@ public class ProductResource {
     @GetMapping("/{id}")
     public ResponseEntity getById(
             @PathVariable UUID id,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -102,7 +102,7 @@ public class ProductResource {
     public ResponseEntity<?> update(
             @PathVariable UUID id,
             @RequestBody ProductRequest request,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -130,7 +130,7 @@ public class ProductResource {
     @Transactional
     public ResponseEntity delete(
             @PathVariable UUID id,
-            @AuthenticationPrincipal Person userSpringSecurity
+            @AuthenticationPrincipal PersonEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
