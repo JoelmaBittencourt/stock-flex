@@ -7,5 +7,5 @@ services:
     ports:
       - "1521:1521"
     environment:
-      ORACLE_PASSWORD: "SuperPassword@22"
+      ORACLE_PASSWORD: "123456"
       ORACLE_SERVICE_NAME: "stockflex"
