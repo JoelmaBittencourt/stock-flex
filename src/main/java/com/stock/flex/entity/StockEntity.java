@@ -37,7 +37,7 @@ public class StockEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private PersonEntity user;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "stock_id")

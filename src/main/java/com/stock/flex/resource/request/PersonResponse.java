@@ -2,7 +2,7 @@ package com.stock.flex.resource.request;
 
 
 
-import com.stock.flex.entity.PersonEntity;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
 
 import java.util.HashSet;
@@ -30,12 +30,12 @@ public class PersonResponse {
 		this.roles = roles;
 	}
 	
-	public PersonResponse(PersonEntity personEntity) {
+	public PersonResponse(UserEntity userEntity) {
 		super();
-		this.id = personEntity.getId();
-		this.name = personEntity.getName();
-		this.email = personEntity.getEmail();
-		this.setRoles(personEntity.getRoles());
+		this.id = userEntity.getId();
+		this.name = userEntity.getName();
+		this.email = userEntity.getEmail();
+		this.setRoles(userEntity.getRoles());
 	}
 
 	public UUID getId() {

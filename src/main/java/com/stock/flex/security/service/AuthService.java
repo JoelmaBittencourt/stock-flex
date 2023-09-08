@@ -3,7 +3,7 @@ package com.stock.flex.security.service;
 import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequest;
-import com.stock.flex.entity.PersonEntity;
+import com.stock.flex.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,14 +29,14 @@ public class AuthService {
 	
 	public AuthResponse register(RegisterRequest dto) {
 		
-		PersonEntity personEntity = new PersonEntity();
-		personEntity.setName(dto.name());
-		personEntity.setEmail(dto.email());
-		personEntity.setPassword(passwordEncoder.encode(dto.password()));
+		UserEntity userEntity = new UserEntity();
+		userEntity.setName(dto.name());
+		userEntity.setEmail(dto.email());
+		userEntity.setPassword(passwordEncoder.encode(dto.password()));
 		
-		personEntity = personService.create(personEntity);
+		userEntity = personService.create(userEntity);
 		
-		return new AuthResponse(jwtService.generateToken(personEntity.getEmail()));
+		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	
 	public AuthResponse authenticate(AuthRequest dto) {
@@ -46,8 +46,8 @@ public class AuthService {
 						dto.email(),
 						dto.password()));
 		
-		final PersonEntity personEntity = personService.findByEmail(dto.email());
-		return new AuthResponse(jwtService.generateToken(personEntity.getEmail()));
+		final UserEntity userEntity = personService.findByEmail(dto.email());
+		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	
 	

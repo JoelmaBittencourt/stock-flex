@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@Table(name = "person")
-public class PersonEntity implements  UserDetails {
+@Table(name = "users")
+public class UserEntity implements  UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,17 +41,17 @@ public class PersonEntity implements  UserDetails {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private PersonEntity user;
+	private UserEntity user;
 
 	@ManyToOne
 	@JoinColumn(name = "stock_id")
 	private StockEntity stock;
 
-	public PersonEntity() {
+	public UserEntity() {
 		super();
 	}
 
-	public PersonEntity(UUID id, String name, String email, String password, Set<Role> roles) {
+	public UserEntity(UUID id, String name, String email, String password, Set<Role> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -60,14 +60,14 @@ public class PersonEntity implements  UserDetails {
 		this.setRoles(roles);
 	}
 
-	public PersonEntity(String name, String email, String password) {
+	public UserEntity(String name, String email, String password) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 	}
 
-	public PersonEntity(PersonResponse dto) {
+	public UserEntity(PersonResponse dto) {
 		this(dto.getName(), dto.getEmail(), dto.getPassword());
 		this.setId(dto.getId());
 		this.setStringRoles(dto.getRoles());

@@ -1,7 +1,7 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
-import com.stock.flex.entity.PersonEntity;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.StockRepository;
@@ -37,7 +37,7 @@ public class CategoryResource {
     public ResponseEntity<?> create(
             @PathVariable UUID stockId,
             @RequestBody CategoryRequest request,
-            @AuthenticationPrincipal PersonEntity userSpringSecurity
+            @AuthenticationPrincipal UserEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -67,7 +67,7 @@ public class CategoryResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> get(@AuthenticationPrincipal PersonEntity userSpringSecurity) throws Exception {
+    public ResponseEntity<List<CategoryResponse>> get(@AuthenticationPrincipal UserEntity userSpringSecurity) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
@@ -83,7 +83,7 @@ public class CategoryResource {
     @GetMapping("/{id}")
     public ResponseEntity getById(
             @PathVariable UUID id,
-            @AuthenticationPrincipal PersonEntity userSpringSecurity
+            @AuthenticationPrincipal UserEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
@@ -137,7 +137,7 @@ public class CategoryResource {
     @Transactional
     public ResponseEntity delete(
             @PathVariable UUID id,
-            @AuthenticationPrincipal PersonEntity userSpringSecurity
+            @AuthenticationPrincipal UserEntity userSpringSecurity
     ) throws Exception {
         if (Objects.isNull(userSpringSecurity)) {
             throw new Exception("Acesso negado! O usuário não está autenticado.");

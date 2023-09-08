@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.stock.flex.resource.request.PersonResponse;
-import com.stock.flex.entity.PersonEntity;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.resource.handler.DuplicationException;
 import com.stock.flex.resource.handler.NotFoundException;
@@ -20,49 +20,49 @@ public class PersonService {
 	@Autowired
 	private PersonRepository repository;
 	
-	public PersonEntity findById(UUID id) {
+	public UserEntity findById(UUID id) {
 		return repository.findById(id).orElseThrow(
 				() -> new NotFoundException("Person not found: " + id));
 	}
 	
-	public PersonEntity findByEmail(String email) {
+	public UserEntity findByEmail(String email) {
 		return repository.findByEmail(email).orElseThrow(
 				() -> new NotFoundException("Person not found: " + email));
 	}
 	
-	public List<PersonEntity> findAll() {
+	public List<UserEntity> findAll() {
 		return repository.findAll();
 	}
 	
-	public PersonEntity create(PersonEntity personEntity) {
-		personEntity.addRole(Role.USER);
-		checkEmailDuplication(personEntity);
-		return repository.save(personEntity);
+	public UserEntity create(UserEntity userEntity) {
+		userEntity.addRole(Role.USER);
+		checkEmailDuplication(userEntity);
+		return repository.save(userEntity);
 	}
 	
 	public PersonResponse create(PersonResponse dto) {
-		return new PersonResponse(create(new PersonEntity(dto)));
+		return new PersonResponse(create(new UserEntity(dto)));
 	}
 	
-	public PersonEntity update(PersonEntity personEntity) {
-		checkEmailDuplication(personEntity);
-		PersonEntity p = findById(personEntity.getId());
-		p.setName(personEntity.getName());
-		p.setEmail(personEntity.getEmail());
-		p.setRoles(personEntity.getRoles());
+	public UserEntity update(UserEntity userEntity) {
+		checkEmailDuplication(userEntity);
+		UserEntity p = findById(userEntity.getId());
+		p.setName(userEntity.getName());
+		p.setEmail(userEntity.getEmail());
+		p.setRoles(userEntity.getRoles());
 		return repository.save(p);
 	}
 	
 	public void delete(UUID id) {
-		final PersonEntity p = findById(id);
+		final UserEntity p = findById(id);
 		repository.delete(p);
 	}
 	
-	private void checkEmailDuplication(PersonEntity personEntity) {
-		final String email = personEntity.getEmail();
+	private void checkEmailDuplication(UserEntity userEntity) {
+		final String email = userEntity.getEmail();
 		if (email != null && email.length() > 0) {
-			final UUID id = personEntity.getId();
-			final PersonEntity p = repository.findByEmail(email).orElse(null);
+			final UUID id = userEntity.getId();
+			final UserEntity p = repository.findByEmail(email).orElse(null);
 			if (p != null && Objects.equals(p.getEmail(), email) && !Objects.equals(p.getId(), id)) {
 				throw new DuplicationException("Email duplication: " + email);
 			}
