@@ -1,7 +1,7 @@
 package com.stock.flex.entity;
 
 
-import com.stock.flex.resource.request.PersonResponse;
+import com.stock.flex.resource.request.UserResponse;
 import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -67,10 +67,10 @@ public class UserEntity implements  UserDetails {
 		this.password = password;
 	}
 
-	public UserEntity(PersonResponse dto) {
-		this(dto.getName(), dto.getEmail(), dto.getPassword());
-		this.setId(dto.getId());
-		this.setStringRoles(dto.getRoles());
+	public UserEntity(UserResponse response) {
+		this(response.getName(), response.getEmail(), response.getPassword());
+		this.setId(response.getId());
+		this.setStringRoles(response.getRoles());
 	}
 
 

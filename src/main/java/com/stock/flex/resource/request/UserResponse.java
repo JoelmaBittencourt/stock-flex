@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PersonResponse {
+public class UserResponse {
 	
 	private UUID id;
 	private String name;
@@ -18,11 +18,11 @@ public class PersonResponse {
 	private String password;
 	private Set<String> roles = new HashSet<>();
 	
-	public PersonResponse() {
+	public UserResponse() {
 		super();
 	}
 
-	public PersonResponse(UUID id, String name, String email, Set<String> roles) {
+	public UserResponse(UUID id, String name, String email, Set<String> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -30,7 +30,7 @@ public class PersonResponse {
 		this.roles = roles;
 	}
 	
-	public PersonResponse(UserEntity userEntity) {
+	public UserResponse(UserEntity userEntity) {
 		super();
 		this.id = userEntity.getId();
 		this.name = userEntity.getName();

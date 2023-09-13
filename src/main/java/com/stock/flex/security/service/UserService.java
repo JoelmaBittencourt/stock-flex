@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.stock.flex.resource.request.PersonResponse;
+import com.stock.flex.resource.request.UserResponse;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.resource.handler.DuplicationException;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class PersonService {
+public class UserService {
 	
 	@Autowired
 	private PersonRepository repository;
@@ -40,8 +40,8 @@ public class PersonService {
 		return repository.save(userEntity);
 	}
 	
-	public PersonResponse create(PersonResponse dto) {
-		return new PersonResponse(create(new UserEntity(dto)));
+	public UserResponse create(UserResponse dto) {
+		return new UserResponse(create(new UserEntity(dto)));
 	}
 	
 	public UserEntity update(UserEntity userEntity) {

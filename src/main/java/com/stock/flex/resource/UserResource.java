@@ -3,9 +3,9 @@ package com.stock.flex.resource;
 import java.util.List;
 import java.util.UUID;
 
-import com.stock.flex.resource.request.PersonResponse;
+import com.stock.flex.resource.request.UserResponse;
 import com.stock.flex.entity.UserEntity;
-import com.stock.flex.security.service.PersonService;
+import com.stock.flex.security.service.UserService;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,29 +15,29 @@ import org.springframework.web.bind.annotation.*;
 @Hidden
 @RestController
 @RequestMapping("/person")
-public class PersonResource {
+public class UserResource {
 	
 	@Autowired
-	private PersonService service;
+	private UserService service;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping
-	public ResponseEntity<List<PersonResponse>> findAll() {
+	public ResponseEntity<List<UserResponse>> findAll() {
 		final List<UserEntity> personEntities = service.findAll();
-		final List<PersonResponse> dtos = personEntities.stream().map(p -> new PersonResponse(p)).toList();
+		final List<UserResponse> dtos = personEntities.stream().map(p -> new UserResponse(p)).toList();
 		return ResponseEntity.ok(dtos);
 	}
 
 	@PostMapping
-	public ResponseEntity<PersonResponse> create(@RequestBody PersonResponse dto) {
+	public ResponseEntity<UserResponse> create(@RequestBody UserResponse dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return ResponseEntity.ok(service.create(dto));
 	}
 
 	@PutMapping
-	public ResponseEntity<PersonResponse> update(@RequestBody PersonResponse dto) {
+	public ResponseEntity<UserResponse> update(@RequestBody UserResponse dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return ResponseEntity.ok(service.create(dto));
 	}

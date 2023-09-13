@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 	@Autowired
-	private PersonService personService;
+	private UserService userService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -27,26 +27,26 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	public AuthResponse register(RegisterRequest dto) {
+	public AuthResponse register(RegisterRequest request) {
 		
 		UserEntity userEntity = new UserEntity();
-		userEntity.setName(dto.name());
-		userEntity.setEmail(dto.email());
-		userEntity.setPassword(passwordEncoder.encode(dto.password()));
+		userEntity.setName(request.name());
+		userEntity.setEmail(request.email());
+		userEntity.setPassword(passwordEncoder.encode(request.password()));
 		
-		userEntity = personService.create(userEntity);
+		userEntity = userService.create(userEntity);
 		
 		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	
-	public AuthResponse authenticate(AuthRequest dto) {
+	public AuthResponse authenticate(AuthRequest request) {
 		
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
-						dto.email(),
-						dto.password()));
+						request.email(),
+						request.password()));
 		
-		final UserEntity userEntity = personService.findByEmail(dto.email());
+		final UserEntity userEntity = userService.findByEmail(request.email());
 		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	

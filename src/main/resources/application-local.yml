@@ -1,13 +1,13 @@
-spring:
-  datasource:
-    url: jdbc:oracle:thin:@localhost:1521:XE
-    username: dev_user
-    password: dev_password
-    driver-class-name: oracle.jdbc.OracleDriver
-    initialization-mode: always
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  profiles:
-    active: local
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@localhost:1521:XE
+#    username: dev_user
+#    password: dev_password
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    initialization-mode: always
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#  profiles:
+#    active: local
