@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class CategoryResource {
 
     @PostMapping("/{stockId}")
     @Transactional
+    @PreAuthorize("@categoryPermissionChecker.hasPermission(#stockId, principal)")
     public ResponseEntity<?> create(
             @PathVariable UUID stockId,
             @RequestBody CategoryRequest request,
@@ -43,28 +45,26 @@ public class CategoryResource {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
 
-        // Verifique se o estoque associado à categoria existe
         Optional<StockEntity> stockOptional = stockRepository.findById(stockId);
         if (stockOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O estoque associado à categoria não foi encontrado.");
         }
 
         StockEntity stock = stockOptional.get();
-        if (!stock.getUser().equals(userSpringSecurity)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para criar uma categoria neste estoque.");
+
+        if (!stock.getUser().getId().equals(userSpringSecurity.getId())) {
+            throw new Exception("Acesso negado! Você não tem permissão para criar uma categoria neste estoque.");
         }
 
-        // Crie a categoria e associe-a ao estoque
         CategoryEntity newCategory = new CategoryEntity(request);
         newCategory.setStock(stock);
 
-        // Salve a categoria no banco de dados
         CategoryEntity savedCategory = repository.save(newCategory);
 
-        // Retorne uma resposta de sucesso com a categoria criada
         CategoryResponse response = new CategoryResponse(savedCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> get(@AuthenticationPrincipal UserEntity userSpringSecurity) throws Exception {
@@ -72,7 +72,6 @@ public class CategoryResource {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
 
-        // Consulta todas as categorias associadas ao usuário autenticado
         List<CategoryEntity> categories = repository.findByStockUser(userSpringSecurity);
 
         List<CategoryResponse> categoryResponses = categories.stream().map(CategoryResponse::new).toList();
@@ -89,7 +88,6 @@ public class CategoryResource {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
 
-        // Consulte a categoria pelo ID
         Optional<CategoryEntity> categoryOptional = repository.findById(id);
         if (categoryOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
@@ -97,7 +95,6 @@ public class CategoryResource {
 
         CategoryEntity category = categoryOptional.get();
 
-        // Verifique se o usuário tem permissão para acessar esta categoria
         if (!category.getStock().getUser().equals(userSpringSecurity)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para acessar esta categoria.");
         }
@@ -105,33 +102,36 @@ public class CategoryResource {
         return ResponseEntity.ok(new CategoryResponse(category));
     }
 
-//    @PutMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity<CategoryRequest> updateCategory(
-//            @PathVariable UUID id,
-//            @RequestBody CategoryRequest request,
-//            @AuthenticationPrincipal Person userSpringSecurity
-//    ) throws Exception {
-//        if (Objects.isNull(userSpringSecurity)) {
-//            throw new Exception("Acesso negado! O usuário não está autenticado.");
-//        }
-//
-//        // Consulte a categoria pelo ID
-//        Optional<CategoryEntity> categoryOptional = repository.findById(id);
-//        if (categoryOptional.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
-//        }
-//
-//        CategoryEntity category = categoryOptional.get();
-//
-//        // Verifique se o usuário tem permissão para atualizar esta categoria
-//        if (!category.getStock().getUser().equals(userSpringSecurity)) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para atualizar esta categoria.");
-//        }
-//
-//        category.updateInfo(request);
-//        return ResponseEntity.ok(new CategoryRequest(category));
-//    }
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> update(
+            @PathVariable UUID id,
+            @RequestBody CategoryRequest request,
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<CategoryEntity> categoryOptional = repository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
+        }
+
+        CategoryEntity category = categoryOptional.get();
+
+        if (!category.getStock().getUser().equals(userSpringSecurity)) {
+            throw new Exception("Acesso negado! Você não tem permissão para atualizar esta categoria.");
+        }
+
+        category.updateInfo(request);
+
+        CategoryEntity updatedCategory = repository.save(category);
+
+        CategoryResponse response = new CategoryResponse(updatedCategory);
+        return ResponseEntity.ok(response);
+    }
+
 
     @DeleteMapping("/{id}")
     @Transactional
@@ -143,7 +143,6 @@ public class CategoryResource {
             throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
 
-        // Consulte a categoria pelo ID
         Optional<CategoryEntity> categoryOptional = repository.findById(id);
         if (categoryOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
@@ -151,7 +150,6 @@ public class CategoryResource {
 
         CategoryEntity category = categoryOptional.get();
 
-        // Verifique se o usuário tem permissão para excluir esta categoria
         if (!category.getStock().getUser().equals(userSpringSecurity)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para excluir esta categoria.");
         }
