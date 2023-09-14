@@ -7,8 +7,8 @@ import java.util.UUID;
 import com.stock.flex.resource.request.UserResponse;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
-import com.stock.flex.resource.handler.DuplicationException;
-import com.stock.flex.resource.handler.NotFoundException;
+import com.stock.flex.exception.DuplicationEmailException;
+import com.stock.flex.exception.NotFoundException;
 import com.stock.flex.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +64,7 @@ public class UserService {
 			final UUID id = userEntity.getId();
 			final UserEntity p = repository.findByEmail(email).orElse(null);
 			if (p != null && Objects.equals(p.getEmail(), email) && !Objects.equals(p.getId(), id)) {
-				throw new DuplicationException("Email duplication: " + email);
+				throw new DuplicationEmailException("Email duplication: " + email);
 			}
 		}
 	}
