@@ -1,8 +1,9 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
-import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.ProductEntity;
+import com.stock.flex.entity.StockEntity;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.ProductRepository;
 import com.stock.flex.resource.request.ProductRequest;
@@ -12,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,7 @@ public class ProductResource {
 
     @PostMapping("/{categoryId}")
     @Transactional
+    @PreAuthorize("@productPermissionChecker.hasPermission(#categoryId, principal)")
     public ResponseEntity<?> create(
             @PathVariable UUID categoryId,
             @RequestBody ProductRequest request,
@@ -48,8 +51,10 @@ public class ProductResource {
         }
 
         CategoryEntity category = categoryOptional.get();
-        if (!category.getStock().getUser().equals(userSpringSecurity)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para criar um produto nesta categoria.");
+        StockEntity stock = category.getStock(); // Obter o estoque associado à categoria
+
+        if (!stock.getUser().getId().equals(userSpringSecurity.getId())) {
+            throw new Exception("Acesso negado! Você não tem permissão para criar um produto nesta categoria.");
         }
 
         ProductEntity newProduct = new ProductEntity(request);
@@ -116,15 +121,16 @@ public class ProductResource {
         ProductEntity product = productOptional.get();
 
         if (!product.getCategory().getStock().getUser().equals(userSpringSecurity)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para atualizar este produto.");
+            throw new Exception("Acesso negado! Você não tem permissão para atualizar este produto.");
         }
 
         product.updateInfo(request);
 
-        ProductRequest updatedProductRequest = new ProductRequest(product);
-        return ResponseEntity.ok(updatedProductRequest);
-    }
+        ProductEntity updatedProduct = repository.save(product);
 
+        ProductResponse response = new ProductResponse(updatedProduct);
+        return ResponseEntity.ok(response);
+    }
 
     @DeleteMapping("/{id}")
     @Transactional
@@ -148,6 +154,6 @@ public class ProductResource {
         }
 
         repository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
