@@ -1,10 +1,10 @@
 package com.stock.flex.resource.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
+@Getter
 public class StandardError {
 	private HttpStatus status;
 	private String error;
@@ -17,22 +17,5 @@ public class StandardError {
 		this.message = ex.getMessage();
 		this.path = request.getRequestURI();
 	}
-
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	public String getError() {
-		return error;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
 
 }
