@@ -12,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
+
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +33,11 @@ public class ProductEntity {
     private int quantity;
     private int displayOrder;
     private int starQuantity;
+    private Date expirationDate;
+    private Date purchaseDate;
+    private String brand;
+    private String purchaseLocation;
+    private boolean hasCoupon;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -44,6 +51,12 @@ public class ProductEntity {
         this.quantity = request.quantity();
         this.displayOrder = request.displayOrder();
         this.starQuantity = request.starQuantity();
+        this.expirationDate = request.expirationDate();
+        this.purchaseDate = request.purchaseDate();
+        this.brand = request.brand();
+        this.purchaseLocation = request.purchaseLocation();
+        this.hasCoupon = request.hasCoupon();
+
     }
 
     public void updateInfo(ProductRequest request) {

@@ -51,7 +51,7 @@ public class ProductResource {
         }
 
         CategoryEntity category = categoryOptional.get();
-        StockEntity stock = category.getStock(); // Obter o estoque associado à categoria
+        StockEntity stock = category.getStock();
 
         if (!stock.getUser().getId().equals(userSpringSecurity.getId())) {
             throw new Exception("Acesso negado! Você não tem permissão para criar um produto nesta categoria.");
