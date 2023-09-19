@@ -66,5 +66,4 @@ public class StockEntity {
                 .map(CategoryEntity::new)
                 .collect(Collectors.toList());
     }
-
 }

@@ -3,7 +3,7 @@ package com.stock.flex.resource;
 import java.util.List;
 import java.util.UUID;
 
-import com.stock.flex.resource.request.UserResponse;
+import com.stock.flex.resource.response.UserResponse;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.security.service.UserService;
 import io.swagger.v3.oas.annotations.Hidden;

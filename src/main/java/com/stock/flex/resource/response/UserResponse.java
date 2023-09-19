@@ -1,4 +1,4 @@
-package com.stock.flex.resource.request;
+package com.stock.flex.resource.response;
 
 
 

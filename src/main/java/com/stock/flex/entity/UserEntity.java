@@ -1,7 +1,6 @@
 package com.stock.flex.entity;
 
-
-import com.stock.flex.resource.request.UserResponse;
+import com.stock.flex.resource.response.UserResponse;
 import com.stock.flex.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Table(name = "users")
-public class UserEntity implements  UserDetails {
+public class UserEntity implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,8 +35,6 @@ public class UserEntity implements  UserDetails {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "person_role")
 	private Set<Integer> roles = new HashSet<>(Arrays.asList(Role.USER.getId()));
-
-
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -74,11 +70,9 @@ public class UserEntity implements  UserDetails {
 		this.setStringRoles(response.getRoles());
 	}
 
-
 	public Set<Role> getRoles() {
 		return roles.stream().map(r -> Role.fromId(r)).collect(Collectors.toSet());
 	}
-
 
 	public void setRoles(Set<Role> roles) {
 		if (roles == null || roles.isEmpty())
@@ -107,7 +101,7 @@ public class UserEntity implements  UserDetails {
 
 	@Override
 	public String getPassword() {
-		return  password;
+		return password;
 	}
 
 	@Override
@@ -139,5 +133,4 @@ public class UserEntity implements  UserDetails {
 	public String toString() {
 		return "Person [id=" + id + ", name=" + name + ", email=" + email + ", roles=" + getRoles() + "]";
 	}
-
 }

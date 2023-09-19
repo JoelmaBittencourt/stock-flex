@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.stock.flex.resource.request.UserResponse;
+import com.stock.flex.resource.response.UserResponse;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.exception.DuplicationEmailException;
