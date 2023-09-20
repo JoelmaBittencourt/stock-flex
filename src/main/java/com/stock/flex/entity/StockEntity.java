@@ -37,7 +37,7 @@ public class StockEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Person user;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "stock_id")
@@ -66,5 +66,4 @@ public class StockEntity {
                 .map(CategoryEntity::new)
                 .collect(Collectors.toList());
     }
-
 }

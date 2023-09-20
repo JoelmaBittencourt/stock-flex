@@ -25,6 +25,7 @@ public class SwaggerConfig {
                             .description("API Rest da aplicação Stock-flex, oferecendo recursos para registro e autenticação de usuários, permitindo que os usuários criem e gerenciem seus estoques personalizados")
                             .contact(new Contact()
                                     .name("Time Backend")
+                                    .url("linkedin")
                                     .email("joelmadev@gmail.com")));
         }
     }

@@ -1,9 +1,9 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security;
 
 import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequest;
-import com.stock.flex.entity.Person;
+import com.stock.flex.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 	@Autowired
-	private PersonService personService;
+	private UserService userService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -27,29 +27,27 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	public AuthResponse register(RegisterRequest dto) {
+	public AuthResponse register(RegisterRequest request) {
 		
-		Person person = new Person();
-		person.setName(dto.name());
-		person.setEmail(dto.email());
-		person.setPassword(passwordEncoder.encode(dto.password()));
+		UserEntity userEntity = new UserEntity();
+		userEntity.setName(request.name());
+		userEntity.setEmail(request.email());
+		userEntity.setPassword(passwordEncoder.encode(request.password()));
 		
-		person = personService.create(person);
+		userEntity = userService.create(userEntity);
 		
-		return new AuthResponse(jwtService.generateToken(person.getEmail()));
+		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	
-	public AuthResponse authenticate(AuthRequest dto) {
+	public AuthResponse authenticate(AuthRequest request) {
 		
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
-						dto.email(),
-						dto.password()));
+						request.email(),
+						request.password()));
 		
-		final Person person = personService.findByEmail(dto.email());
-		return new AuthResponse(jwtService.generateToken(person.getEmail()));
+		final UserEntity userEntity = userService.findByEmail(request.email());
+		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
-	
-	
 	
 }

@@ -1,28 +1,23 @@
 package com.stock.flex.resource;
 
 import com.stock.flex.entity.CategoryEntity;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.StockEntity;
 import com.stock.flex.repository.CategoryRepository;
 import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.CategoryRequest;
 import com.stock.flex.resource.response.CategoryResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,53 +35,125 @@ public class CategoryResource {
 
     @PostMapping("/{stockId}")
     @Transactional
+    @PreAuthorize("@categoryPermissionChecker.hasPermission(#stockId, principal)")
     public ResponseEntity<?> create(
             @PathVariable UUID stockId,
-            @RequestBody CategoryRequest request
-    ) {
-        // Verifique se o estoque associado à categoria existe
-        Optional<StockEntity> stockOptional = stockRepository.findById(stockId);
-        if (stockOptional.isEmpty()) {
-            String errorMessage = "O estoque associado à categoria não foi encontrado.";
-            return ResponseEntity.badRequest().body(errorMessage);
+            @RequestBody CategoryRequest request,
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
         }
 
-        // Crie a categoria e associe-a ao estoque
-        CategoryEntity newCategory = new CategoryEntity(request);
-        newCategory.setStock(stockOptional.get());
+        Optional<StockEntity> stockOptional = stockRepository.findById(stockId);
+        if (stockOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O estoque associado à categoria não foi encontrado.");
+        }
 
-        // Salve a categoria no banco de dados
+        StockEntity stock = stockOptional.get();
+
+        if (!stock.getUser().getId().equals(userSpringSecurity.getId())) {
+            throw new Exception("Acesso negado! Você não tem permissão para criar uma categoria neste estoque.");
+        }
+
+        CategoryEntity newCategory = new CategoryEntity(request);
+        newCategory.setStock(stock);
+
         CategoryEntity savedCategory = repository.save(newCategory);
 
-        // Retorne uma resposta de sucesso com a categoria criada
         CategoryResponse response = new CategoryResponse(savedCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> get() {
-        var list = repository.findAll().stream().map(CategoryResponse::new).toList();
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<CategoryResponse>> get(@AuthenticationPrincipal UserEntity userSpringSecurity) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        List<CategoryEntity> categories = repository.findByStockUser(userSpringSecurity);
+
+        List<CategoryResponse> categoryResponses = categories.stream().map(CategoryResponse::new).toList();
+
+        return ResponseEntity.ok(categoryResponses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable UUID id) {
-        var category = repository.getById(id);
+    public ResponseEntity getById(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<CategoryEntity> categoryOptional = repository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
+        }
+
+        CategoryEntity category = categoryOptional.get();
+
+        if (!category.getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para acessar esta categoria.");
+        }
+
         return ResponseEntity.ok(new CategoryResponse(category));
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<CategoryRequest> updateCategory(@PathVariable UUID id, @RequestBody CategoryRequest request) {
-        var category = repository.getReferenceById(id);
+    public ResponseEntity<?> update(
+            @PathVariable UUID id,
+            @RequestBody CategoryRequest request,
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<CategoryEntity> categoryOptional = repository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
+        }
+
+        CategoryEntity category = categoryOptional.get();
+
+        if (!category.getStock().getUser().equals(userSpringSecurity)) {
+            throw new Exception("Acesso negado! Você não tem permissão para atualizar esta categoria.");
+        }
+
         category.updateInfo(request);
-        return ResponseEntity.ok(new CategoryRequest(category));
+
+        CategoryEntity updatedCategory = repository.save(category);
+
+        CategoryResponse response = new CategoryResponse(updatedCategory);
+        return ResponseEntity.ok(response);
     }
+
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable UUID id) {
+    public ResponseEntity delete(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) throws Exception {
+        if (Objects.isNull(userSpringSecurity)) {
+            throw new Exception("Acesso negado! O usuário não está autenticado.");
+        }
+
+        Optional<CategoryEntity> categoryOptional = repository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada.");
+        }
+
+        CategoryEntity category = categoryOptional.get();
+
+        if (!category.getStock().getUser().equals(userSpringSecurity)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado! Você não tem permissão para excluir esta categoria.");
+        }
+
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
