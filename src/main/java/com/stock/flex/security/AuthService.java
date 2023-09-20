@@ -1,4 +1,4 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security;
 
 import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
@@ -49,7 +49,5 @@ public class AuthService {
 		final UserEntity userEntity = userService.findByEmail(request.email());
 		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
-	
-	
 	
 }

@@ -4,12 +4,16 @@ package com.stock.flex.resource.response;
 
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 public class UserResponse {
 	
 	private UUID id;
@@ -38,44 +42,9 @@ public class UserResponse {
 		this.setRoles(userEntity.getRoles());
 	}
 
-	public UUID getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-	
-	public Set<String> getRoles() {
-		return roles;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public void setRoles(Set<Role> roles) {
-		this.roles = roles.stream().map(r -> r.getDescription()).collect(Collectors.toSet());
+		this.roles = roles.stream().map(Role::getDescription).collect(Collectors.toSet());
 	}
 	
 }

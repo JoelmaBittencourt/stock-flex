@@ -34,7 +34,7 @@ public class UserEntity implements UserDetails {
 	@Column(name = "role")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "person_role")
-	private Set<Integer> roles = new HashSet<>(Arrays.asList(Role.USER.getId()));
+	private Set<Integer> roles = new HashSet<>(Collections.singletonList(Role.USER.getId()));
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -71,14 +71,14 @@ public class UserEntity implements UserDetails {
 	}
 
 	public Set<Role> getRoles() {
-		return roles.stream().map(r -> Role.fromId(r)).collect(Collectors.toSet());
+		return roles.stream().map(Role::fromId).collect(Collectors.toSet());
 	}
 
 	public void setRoles(Set<Role> roles) {
 		if (roles == null || roles.isEmpty())
 			this.roles.clear();
 		else
-			this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
+			this.roles = roles.stream().map(Role::getId).collect(Collectors.toSet());
 	}
 
 	public void setStringRoles(Set<String> roles) {

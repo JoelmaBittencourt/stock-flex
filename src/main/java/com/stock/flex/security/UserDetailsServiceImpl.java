@@ -1,4 +1,4 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

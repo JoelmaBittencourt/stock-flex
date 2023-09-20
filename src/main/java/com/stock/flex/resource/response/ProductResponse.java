@@ -4,8 +4,12 @@ import com.stock.flex.entity.ProductEntity;
 
 import java.util.UUID;
 
-public record ProductResponse(UUID id, String name, String description,
-                              double price, int quantity, int displayOrder,
+public record ProductResponse(UUID id,
+                              String name,
+                              String description,
+                              double price,
+                              int quantity,
+                              int displayOrder,
                               int starQuantity) {
 
 

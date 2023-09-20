@@ -1,4 +1,4 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security;
 
 import java.util.Date;
 

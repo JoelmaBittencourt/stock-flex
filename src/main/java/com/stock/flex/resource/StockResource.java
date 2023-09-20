@@ -106,5 +106,4 @@ StockRepository repository;
         return ResponseEntity.ok().build();
     }
 
-
 }

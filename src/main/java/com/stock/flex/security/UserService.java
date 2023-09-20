@@ -1,4 +1,4 @@
-package com.stock.flex.security.service;
+package com.stock.flex.security;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
 import com.stock.flex.exception.DuplicationEmailException;
 import com.stock.flex.exception.NotFoundException;
-import com.stock.flex.repository.PersonRepository;
+import com.stock.flex.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	
 	@Autowired
-	private PersonRepository repository;
+	private UserRepository repository;
 	
 	public UserEntity findById(UUID id) {
 		return repository.findById(id).orElseThrow(
@@ -40,8 +40,8 @@ public class UserService {
 		return repository.save(userEntity);
 	}
 	
-	public UserResponse create(UserResponse dto) {
-		return new UserResponse(create(new UserEntity(dto)));
+	public UserResponse create(UserResponse response) {
+		return new UserResponse(create(new UserEntity(response)));
 	}
 	
 	public UserEntity update(UserEntity userEntity) {
