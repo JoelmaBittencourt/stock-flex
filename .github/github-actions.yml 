@@ -1,7 +1,5 @@
 name: Test Java 17 Compatibility
 
-name: Test Java 17 Compatibility
-
 on:
   pull_request:
     branches:
