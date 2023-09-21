@@ -1,181 +1,127 @@
-# Projeto de Gestão de Estoque
+<h1 align="center">Stock-Flex 📦</h1>
 
-Este é um projeto de gestão de estoque desenvolvido em Java com o uso do Spring Framework. Ele oferece uma solução para gerenciar estoques, categorias e produtos.
+<p align="center">
+  <strong>Sistema de Gerenciamento de Estoque</strong>
+</p>
 
-## Como rodar o projeto
+<p align="center">
+  <a href="#-sobre">Sobre</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-instruções-de-utilização">Instruções de Utilização</a> •
+  <a href="#-swagger">Swagger</a> •
+  <a href="#-como-contribuir">Como Contribuir</a> •
+  <a href="#-licença">Licença</a>
+</p>
 
-Para rodar o projeto, siga estas etapas:
 
-### 1. Instale as ferramentas necessárias
+---
 
-Se você ainda não instalou as ferramentas necessárias, siga as instruções na seção "Instalação das Ferramentas" abaixo.
+## 💡 Sobre
 
-### 2. Obtenha o projeto
+O **Stock-Flex** é um sistema de gerenciamento de estoque desenvolvido como uma aplicação prática de programação orientada a objetos, REST, gerenciamento de banco de dados e segurança com Spring. Ele permite que os usuários controlem o estoque de produtos, adicionem categorias, atualizem e excluam informações.
 
-Clone o projeto do GitHub:
+Este projeto é uma oportunidade para aprender e aplicar conceitos fundamentais de desenvolvimento de software, incluindo:
 
-```bash
-git clone https://github.com/seu-usuario/seu-projeto.git
-```   
-## Execute o Docker Compose
+- 🪄 **Orientação a Objetos**: O Stock-Flex utiliza princípios de programação orientada a objetos para criar uma estrutura organizada e modular do código.
 
-Para iniciar o projeto em um ambiente de contêiner, execute o seguinte comando:
+- 🌐 **API RESTful**: A aplicação é baseada em uma API RESTful, que fornece uma interface fácil de usar para interagir com o sistema.
 
-```bash
-docker-compose up -d
-```
+- 🗄️ **Banco de Dados**: O sistema armazena dados em um banco de dados Oracle e H2, permitindo o armazenamento e recuperação eficientes de informações de estoque.
 
-```bash
-    ./gradlew clean build
-    ./gradlew bootrun
-```
+- 🔐 **Segurança com Spring Security**: A segurança é uma prioridade, e o Spring Security é usado para autenticar e autorizar usuários, protegendo as funcionalidades críticas.
 
-Ferramentas Necessárias para Executar o Projeto
+O Stock-Flex é uma excelente ferramenta para estudar e praticar o desenvolvimento de aplicativos web, com foco em gerenciamento de estoque. Além disso, ele pode ser estendido e personalizado para atender a diferentes requisitos de negócios relacionados ao gerenciamento de estoque.
 
-Certifique-se de ter as seguintes ferramentas e recursos instalados em seu ambiente de desenvolvimento:
+---
 
-    Docker: Utilizado para criar e gerenciar contêineres.
-    Docker Compose: Utilizado para definir e executar serviços multi-contêiner em aplicativos.
-    Java 17: A versão mais recente do Java é necessária para executar o aplicativo.
-    SQL Developer ou DBeaver: Um cliente SQL para interagir com o banco de dados.
-    Postman: Uma ferramenta para testar APIs.
-    IntelliJ IDEA: Um ambiente de desenvolvimento integrado (IDE) para Java.
+## 🚀 Tecnologias
 
-Instalação das Ferramentas
+### Backend
 
-Siga estas etapas para configurar o ambiente e executar o projeto:
+- ☕ [Java 17](http://www.oracle.com/java/technologies/javase-downloads.html)
+- 📦 [Gradle Wrapper (Gradlew)](https://gradle.org/install/)
 
-    Docker e Docker Compose:
+### Database
 
-    Certifique-se de ter o Docker e o Docker Compose instalados em seu sistema. Você pode obtê-los em Docker e Docker Compose.
+- 🛢️ [Oracle Database](https://www.oracle.com/database/technologies/)
+- 🗄️ [H2 Database](https://www.h2database.com/html/main.html)
 
-    Java 17:
+### Ferramentas
 
-    Instale o Java 17 em seu sistema. Você pode encontrar a versão mais recente em Oracle ou OpenJDK.
+- 🧠 [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+- 📮 [Postman](http://www.postman.com/downloads/)
+- 🧭 [SQL Developer](https://www.oracle.com/tools/downloads/sqldev-downloads.html)
+- 🐙 [Git](https://git-scm.com/downloads/)
+- 🐳 [Docker](https://docs.docker.com/desktop/install/windows-install/)
 
-    SQL Developer ou DBeaver:
+---
 
-    Escolha entre o SQL Developer e o DBeaver como seu cliente de banco de dados SQL e siga as instruções de instalação nos respectivos sites:
-        SQL Developer
-        DBeaver
+## ⤵ Instruções de Utilização
 
-    Postman:
+### Pré-requisitos
 
-    Baixe e instale o Postman em Postman.
+Certifique-se de ter as seguintes ferramentas e dependências instaladas:
 
-    IntelliJ IDEA:
+- ☕ Java 17
+- 📦 Gradle Wrapper (Gradlew)
+- 🛢️ Oracle Database
+- 🗄️ H2 Database
+- 🧠 IntelliJ IDEA
+- 📮 Postman
+- 🧭 SQL Developer
+- 🐙 Git
+- 🐳 Docker (Docker-Compose)
 
-    Instale o IntelliJ IDEA em IntelliJ IDEA.
 
-Uso
-Autenticação
 
-Para acessar os recursos protegidos, você precisará se autenticar. Isso pode ser feito por meio de uma solicitação HTTP com suas credenciais, geralmente um nome de usuário e senha.
-Gerenciamento de Estoque
-Listar Estoques
+<br>
 
-    Método HTTP: GET
-    Descrição: Este método permite listar todos os estoques disponíveis na aplicação.
+- Passo 1: Clonar o repositório:
+  ```bash
+  git clone https://github.com/JoelmaBittencourt/stock-flex.git
 
-Criar Estoque
+<br>
 
-    Método HTTP: POST
-    Descrição: Este método permite criar um novo estoque especificando seu nome e descrição.
+- Passo 2: subir o docker(se preferir pelo banco oracle, caso contrario pule este passo):
+  ```bash
+   docker-compose-up -d
 
-Atualizar Estoque
+<br>
 
-    Método HTTP: PUT
-    Descrição: Este método permite atualizar os detalhes de um estoque existente, como nome ou descrição.
+- Passo 3: Iniciar a aplicação Spring Boot:
+  ```bash
+  $ ./gradlew bootrun
+  ```
 
-Excluir Estoque
+<br>
 
-    Método HTTP: DELETE
-    Descrição: Este método permite remover um estoque da aplicação.
 
-Gerenciamento de Categorias
-Listar Categorias
-
-    Método HTTP: GET
-    Descrição: Este método permite listar todas as categorias disponíveis em um estoque.
-
-Criar Categoria
-
-    Método HTTP: POST
-    Descrição: Este método permite criar uma nova categoria em um estoque especificando seu nome e descrição.
-
-Atualizar Categoria
-
-    Método HTTP: PUT
-    Descrição: Este método permite atualizar os detalhes de uma categoria existente em um estoque.
-
-Excluir Categoria
-
-    Método HTTP: DELETE
-    Descrição: Este método permite remover uma categoria de um estoque.
-
-Gerenciamento de Produtos
-Listar Produtos
-
-    Método HTTP: GET
-    Descrição: Este método permite listar todos os produtos disponíveis em uma categoria.
-
-Criar Produto
-
-    Método HTTP: POST
-    Descrição: Este método permite criar um novo produto em uma categoria especificando seu nome, descrição e preço.
-
-Atualizar Produto
-
-    Método HTTP: PUT
-    Descrição: Este método permite atualizar os detalhes de um produto existente em uma categoria.
-
-Excluir Produto
-
-    Método HTTP: DELETE
-    Descrição: Este método permite remover um produto de uma categoria.
-
-Funcionalidades
-
-O projeto permite:
-
-    Gerenciar estoques.
-    Criar, atualizar e excluir categorias em um estoque.
-    Criar, atualizar e excluir produtos em uma categoria.
-    Autenticar usuários para acessar recursos protegidos.
-
-Acessando a Documentação com Swagger
-
+Você pode acessar a documentação da API do Stock-Flex utilizando o Swagger. Basta iniciar a aplicação e acessar o seguinte link em seu navegador:
 [swagger](http://localhost:8080/swagger-ui/index.html#/)
 
-### Script de Instalação de Ferramentas
 
-Você pode usar o script ferramentas.sh para automatizar a instalação das ferramentas necessárias. Siga as etapas abaixo para usá-lo:
+🤝 Como Contribuir
 
-    Dê permissão de execução ao script
+Você pode contribuir para o Stock-Flex de várias maneiras:
 
-    Abra um terminal e execute o seguinte comando para dar permissão de execução ao script:
+   1- Reportando Problemas: Se encontrar algum problema ou erro, por favor, relate-o no GitHub Issues.
 
- ``` shell
+   2- Sugerindo Melhorias: Se tiver sugestões de melhorias ou novos recursos, fique à vontade para criar uma nova
 
-chmod +x ferramentas.sh
-```
+## 📝 Licença
 
-Execute o script para instalar as ferramentas
+Este projeto está sob a **Licença MIT** - consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
 
-Agora, execute o script usando o seguinte comando:
+A Licença MIT é uma licença de código aberto permissiva que permite:
 
-```shell
-    ./ferramentas.sh
-```
+- O uso do código para qualquer finalidade, incluindo fins comerciais.
+- A modificação do código.
+- A distribuição do código.
+- A inclusão da sua própria licença em derivações do código.
 
-    Isso executará o script e instalará as ferramentas necessárias em seu sistema. Certifique-se de que o script está localizado no diretório correto e que você está no diretório correto ao executá-lo.
+A única obrigação é que você inclua o aviso de licença e atribuição ao autor original em seu projeto derivado.
 
-Contribuindo
+[Leia a Licença MIT](LICENSE) para obter mais detalhes.
 
-Sinta-se à vontade para contribuir com melhorias ou correções para este projeto. Abra um problema ou envie uma solicitação de pull request para
+---
 
-
-java -jar seu-aplicativo.jar --spring.profiles.active=qa
-
-
--Dspring.active=local
