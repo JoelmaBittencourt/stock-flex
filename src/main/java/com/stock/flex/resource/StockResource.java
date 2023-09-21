@@ -1,10 +1,10 @@
 package com.stock.flex.resource;
 
-import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.StockEntity;
-import com.stock.flex.repository.StockRepository;
+import com.stock.flex.entity.UserEntity;
 import com.stock.flex.resource.request.StockRequest;
 import com.stock.flex.resource.response.StockResponse;
+import com.stock.flex.useCase.StockUseCase;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 
@@ -25,85 +24,61 @@ import java.util.UUID;
 public class StockResource {
 
     @Autowired
-StockRepository repository;
+    private StockUseCase useCase;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<StockResponse> create(
+    public ResponseEntity<StockResponse> createStock(
             @RequestBody StockRequest request,
             @AuthenticationPrincipal UserEntity userSpringSecurity
-    ) throws Exception {
-        if (Objects.isNull(userSpringSecurity)) {
-            throw new Exception("Acesso negado! O usuário não está autenticado.");
-        }
-
-        StockEntity newStock = new StockEntity(request);
-        newStock.setUser(userSpringSecurity);
-
-        StockEntity savedStock = repository.save(newStock);
-
+    ) {
+        StockEntity savedStock = useCase.createStock(request, userSpringSecurity);
         StockResponse response = new StockResponse(savedStock);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<StockResponse>> get(
+    public ResponseEntity<StockResponse> getStockById(
+            @PathVariable UUID id,
             @AuthenticationPrincipal UserEntity userSpringSecurity
     ) throws Exception {
-        if (Objects.isNull(userSpringSecurity)) {
-            throw new Exception("Acesso negado! O usuário não está autenticado.");
+            StockEntity stock = useCase.getStockById(id, userSpringSecurity);
+            return ResponseEntity.ok(new StockResponse(stock));
         }
 
-        List<StockEntity> stocks = repository.findByUser(userSpringSecurity);
 
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<StockResponse>> getAllStocks(
+            @AuthenticationPrincipal UserEntity userSpringSecurity
+    ) {
+        List<StockEntity> stocks = useCase.getAllStocks(userSpringSecurity);
         List<StockResponse> stockResponses = stocks.stream().map(StockResponse::new).toList();
-
         return ResponseEntity.ok(stockResponses);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<StockResponse> update(
+    public ResponseEntity<StockResponse> updateStock(
             @PathVariable UUID id,
             @RequestBody StockRequest request,
             @AuthenticationPrincipal UserEntity userSpringSecurity
     ) throws Exception {
-        if (Objects.isNull(userSpringSecurity)) {
-            throw new Exception("Acesso negado! O usuário não está autenticado.");
-        }
-
-        StockEntity stock = repository.getById(id);
-
-        if (!stock.getUser().equals(userSpringSecurity)) {
-            throw new Exception("Acesso negado! Você não tem permissão para atualizar este estoque.");
-        }
-
-        stock.updateInfo(request);
-
-        return ResponseEntity.ok(new StockResponse(stock));
+        StockEntity updatedStock = useCase.updateStock(id, request, userSpringSecurity);
+        return ResponseEntity.ok(new StockResponse(updatedStock));
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity delete(
+    public ResponseEntity deleteStock(
             @PathVariable UUID id,
             @AuthenticationPrincipal UserEntity userSpringSecurity
-    ) throws Exception {
-        if (Objects.isNull(userSpringSecurity)) {
-            throw new Exception("Acesso negado! O usuário não está autenticado.");
+    ) {
+        try {
+            useCase.deleteStock(id, userSpringSecurity);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-        StockEntity stock = repository.getById(id);
-
-        if (!stock.getUser().equals(userSpringSecurity)) {
-            throw new Exception("Acesso negado! Você não tem permissão para excluir este estoque.");
-        }
-
-        repository.deleteById(id);
-
-        return ResponseEntity.ok().build();
     }
-
 }

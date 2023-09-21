@@ -1,4 +1,4 @@
-package com.stock.flex.security;
+package com.stock.flex.useCase;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService {
+public class UserUseCase {
 	
 	@Autowired
 	private UserRepository repository;
@@ -46,24 +46,24 @@ public class UserService {
 	
 	public UserEntity update(UserEntity userEntity) {
 		checkEmailDuplication(userEntity);
-		UserEntity p = findById(userEntity.getId());
-		p.setName(userEntity.getName());
-		p.setEmail(userEntity.getEmail());
-		p.setRoles(userEntity.getRoles());
-		return repository.save(p);
+		UserEntity entity = findById(userEntity.getId());
+		entity.setName(userEntity.getName());
+		entity.setEmail(userEntity.getEmail());
+		entity.setRoles(userEntity.getRoles());
+		return repository.save(entity);
 	}
 	
 	public void delete(UUID id) {
-		final UserEntity p = findById(id);
-		repository.delete(p);
+		final UserEntity entity = findById(id);
+		repository.delete(entity);
 	}
 	
 	private void checkEmailDuplication(UserEntity userEntity) {
 		final String email = userEntity.getEmail();
-		if (email != null && email.length() > 0) {
+		if (email != null && !email.isEmpty()) {
 			final UUID id = userEntity.getId();
-			final UserEntity p = repository.findByEmail(email).orElse(null);
-			if (p != null && Objects.equals(p.getEmail(), email) && !Objects.equals(p.getId(), id)) {
+			final UserEntity entity = repository.findByEmail(email).orElse(null);
+			if (entity != null && Objects.equals(entity.getEmail(), email) && !Objects.equals(entity.getId(), id)) {
 				throw new DuplicationEmailException("Email duplication: " + email);
 			}
 		}
