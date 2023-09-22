@@ -2,7 +2,7 @@ package com.stock.flex.config;
 
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
-import com.stock.flex.useCase.UserUseCase;
+import com.stock.flex.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

@@ -3,7 +3,7 @@ package com.stock.flex.resource;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.resource.request.ProductRequest;
 import com.stock.flex.resource.response.ProductResponse;
-import com.stock.flex.useCase.ProductUseCase;
+import com.stock.flex.usecase.ProductUseCase;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

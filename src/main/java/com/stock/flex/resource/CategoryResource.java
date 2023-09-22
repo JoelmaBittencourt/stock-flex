@@ -1,25 +1,18 @@
 package com.stock.flex.resource;
 
-import com.stock.flex.entity.CategoryEntity;
 import com.stock.flex.entity.UserEntity;
-import com.stock.flex.entity.StockEntity;
-import com.stock.flex.repository.CategoryRepository;
-import com.stock.flex.repository.StockRepository;
 import com.stock.flex.resource.request.CategoryRequest;
 import com.stock.flex.resource.response.CategoryResponse;
-import com.stock.flex.useCase.CategoryUseCase;
+import com.stock.flex.usecase.CategoryUseCase;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController

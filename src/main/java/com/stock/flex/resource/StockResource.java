@@ -4,7 +4,7 @@ import com.stock.flex.entity.StockEntity;
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.resource.request.StockRequest;
 import com.stock.flex.resource.response.StockResponse;
-import com.stock.flex.useCase.StockUseCase;
+import com.stock.flex.usecase.StockUseCase;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

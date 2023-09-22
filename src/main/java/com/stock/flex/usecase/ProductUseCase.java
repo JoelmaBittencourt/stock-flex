@@ -1,4 +1,4 @@
-package com.stock.flex.useCase;
+package com.stock.flex.usecase;
 
 import com.stock.flex.entity.CategoryEntity;
 import com.stock.flex.entity.ProductEntity;

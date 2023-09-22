@@ -4,7 +4,7 @@ import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequest;
 import com.stock.flex.entity.UserEntity;
-import com.stock.flex.useCase.UserUseCase;
+import com.stock.flex.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package com.stock.flex.useCase;
+package com.stock.flex.usecase;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class UserUseCase {
 		return repository.findById(id).orElseThrow(
 				() -> new NotFoundException("Person not found: " + id));
 	}
-	
+
 	public UserEntity findByEmail(String email) {
 		return repository.findByEmail(email).orElseThrow(
 				() -> new NotFoundException("Person not found: " + email));

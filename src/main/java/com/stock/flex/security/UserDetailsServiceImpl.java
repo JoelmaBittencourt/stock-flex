@@ -1,6 +1,6 @@
 package com.stock.flex.security;
 
-import com.stock.flex.useCase.UserUseCase;
+import com.stock.flex.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
