@@ -7,13 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
-
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -33,8 +27,8 @@ public class ProductEntity {
     private int quantity;
     private int displayOrder;
     private int starQuantity;
-    private Date expirationDate;
-    private Date purchaseDate;
+    private LocalDate expirationDate;
+    LocalDate purchaseDate;
     private String brand;
     private String purchaseLocation;
     private boolean hasCoupon;
@@ -43,6 +37,18 @@ public class ProductEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
+    public ProductEntity(String name, String description, double price, int quantity, int starQuantity, LocalDate expirationDate, LocalDate purchaseDate, String brand, String purchaseLocation, boolean hasCoupon) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.starQuantity = starQuantity;
+        this.expirationDate = expirationDate;
+        this.purchaseDate = purchaseDate;
+        this.brand = brand;
+        this.purchaseLocation = purchaseLocation;
+        this.hasCoupon = hasCoupon;
+    }
 
     public ProductEntity(ProductRequest request) {
         this.name = request.name();
@@ -58,6 +64,8 @@ public class ProductEntity {
         this.hasCoupon = request.hasCoupon();
 
     }
+
+
 
     public void updateInfo(ProductRequest request) {
         if (request.name() != null) {

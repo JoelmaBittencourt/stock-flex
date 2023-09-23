@@ -3,6 +3,7 @@ package com.stock.flex.resource.request;
 import com.stock.flex.entity.ProductEntity;
 import jakarta.validation.constraints.Pattern;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public record ProductRequest(
@@ -13,8 +14,8 @@ public record ProductRequest(
         int displayOrder,
         @Pattern(regexp = "\\d{0,5}", message = "Deve conter um número de 0 a 5")
         int starQuantity,
-        Date expirationDate,
-        Date purchaseDate,
+        LocalDate expirationDate,
+        LocalDate purchaseDate,
 
         String brand,
         String purchaseLocation,
