@@ -59,6 +59,12 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+tasks {
+	// Configuração da tarefa bootJar
+	val bootJar by getting(org.springframework.boot.gradle.tasks.bundling.BootJar::class) {
+		archiveFileName.set("stock-flex.jar")
+	}
+}
 
 tasks.withType<Test> {
 	useJUnitPlatform()

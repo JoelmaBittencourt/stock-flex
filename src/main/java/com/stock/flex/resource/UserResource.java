@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.stock.flex.resource.response.UserResponse;
 import com.stock.flex.entity.UserEntity;
-import com.stock.flex.security.UserService;
+import com.stock.flex.usecase.UserUseCase;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserResource {
 	
 	@Autowired
-	private UserService service;
+	private UserUseCase service;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

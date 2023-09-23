@@ -2,7 +2,7 @@ package com.stock.flex.config;
 
 import com.stock.flex.entity.UserEntity;
 import com.stock.flex.entity.enums.Role;
-import com.stock.flex.security.service.UserService;
+import com.stock.flex.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DatabaseInitializationConfig {
 
     @Autowired
-    private UserService userService;
+    private UserUseCase userUseCase;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,8 +29,8 @@ public class DatabaseInitializationConfig {
             stockflex.addRole(Role.ADMIN);
             joelma.addRole(Role.ADMIN);
 
-            userService.create(stockflex);
-            userService.create(joelma);
+            userUseCase.create(stockflex);
+            userUseCase.create(joelma);
         };
     }
 }

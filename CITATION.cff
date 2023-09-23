@@ -1,0 +1,17 @@
+cff-version: 1.0
+title: Stock-Flex - Sistema de Gerenciamento de Estoque
+message: >-
+  Um sistema de gerenciamento de estoque desenvolvido em Spring Boot para praticar orientação a objetos, REST, banco de dados e Spring Security.
+type: software
+authors:
+  - given-names: Joelma
+    family-names: Bittencourt
+repository-code: >-
+  https://github.com/JoelmaBittencourt/stock-flex
+keywords:
+- Orientação a Objetos
+  - REST
+  - Spring Boot
+  - Banco de Dados
+  - Spring Security
+license: MIT License

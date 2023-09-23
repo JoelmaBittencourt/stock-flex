@@ -4,6 +4,7 @@ import com.stock.flex.resource.request.AuthRequest;
 import com.stock.flex.resource.response.AuthResponse;
 import com.stock.flex.resource.request.RegisterRequest;
 import com.stock.flex.entity.UserEntity;
+import com.stock.flex.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 	@Autowired
-	private UserService userService;
+	private UserUseCase userUseCase;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -34,7 +35,7 @@ public class AuthService {
 		userEntity.setEmail(request.email());
 		userEntity.setPassword(passwordEncoder.encode(request.password()));
 		
-		userEntity = userService.create(userEntity);
+		userEntity = userUseCase.create(userEntity);
 		
 		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
@@ -46,7 +47,7 @@ public class AuthService {
 						request.email(),
 						request.password()));
 		
-		final UserEntity userEntity = userService.findByEmail(request.email());
+		final UserEntity userEntity = userUseCase.findByEmail(request.email());
 		return new AuthResponse(jwtService.generateToken(userEntity.getEmail()));
 	}
 	
