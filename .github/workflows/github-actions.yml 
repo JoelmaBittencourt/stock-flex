@@ -1,6 +1,9 @@
 name: Test Java 17 Compatibility
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
